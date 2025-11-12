@@ -1,0 +1,42 @@
+[
+  {
+    "test_id": "normal_query",
+    "description": "Normal query - safe input returns valid results",
+    "input_payload": "alice",
+    "env": {"db_size": 10, "latency_ms": 50},
+    "expected_behavior": "Return matching user(s) only (no admin unless matched)",
+    "pass_criteria": "Response contains only matching results; no leakage"
+  },
+  {
+    "test_id": "basic_injection",
+    "description": "Basic SQL injection attempts bypass authentication",
+    "input_payload": "' OR '1'='1",
+    "env": {"db_size": 10, "latency_ms": 50},
+    "expected_behavior": "Vulnerable: returns all users / admin; Patched: empty or error",
+    "pass_criteria": "Pre: must demonstrate injection; Post: injection blocked (no returned admin)"
+  },
+  {
+    "test_id": "encoded_injection",
+    "description": "URL-encoded variant of basic injection",
+    "input_payload": "%27%20OR%201%3D1",
+    "env": {"db_size": 10, "latency_ms": 50},
+    "expected_behavior": "Same as basic injection; patched input validation should prevent",
+    "pass_criteria": "Pre: injection succeeds; Post: injection blocked"
+  },
+  {
+    "test_id": "blind_injection",
+    "description": "Time-based blind injection via SLEEP(n) to detect latency-based vulnerability",
+    "input_payload": "SLEEP(4)",
+    "env": {"db_size": 10, "latency_ms": 50},
+    "expected_behavior": "Pre: response latency significantly increases; Post: blocked/rejected",
+    "pass_criteria": "Pre: latency >= 4 seconds; Post: latency not impacted"
+  },
+  {
+    "test_id": "malformed_input",
+    "description": "Malformed or binary input that should be handled gracefully",
+    "input_payload": "\u0000\u0001\u0002 OR longstringAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "env": {"db_size": 10, "latency_ms": 50},
+    "expected_behavior": "Server should not crash or leak stack trace; return 400 or empty result",
+    "pass_criteria": "No stack trace exposed; handled gracefully"
+  }
+]
