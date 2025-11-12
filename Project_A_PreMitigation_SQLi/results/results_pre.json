@@ -1,0 +1,88 @@
+{
+  "project": "Project_A_PreMitigation_SQLi",
+  "timestamp": "2025-11-12T18:29:33.286895",
+  "test_results": [
+    {
+      "test_id": "TC001_NORMAL_QUERY",
+      "description": "Normal safe query returning valid results",
+      "payload": "john",
+      "is_injection": false,
+      "status_code": 200,
+      "response_time_ms": 14.94,
+      "data_returned": true,
+      "injection_successful": false,
+      "leakage_detected": false,
+      "passed": true
+    },
+    {
+      "test_id": "TC002_BASIC_INJECTION",
+      "description": "Basic SQL injection: OR 1=1 to bypass authentication",
+      "payload": "' OR '1'='1",
+      "is_injection": true,
+      "status_code": 200,
+      "response_time_ms": 9.68,
+      "data_returned": true,
+      "injection_successful": true,
+      "leakage_detected": false,
+      "passed": false
+    },
+    {
+      "test_id": "TC003_ENCODED_INJECTION",
+      "description": "URL-encoded SQL injection payload",
+      "payload": "%27%20OR%20%271%27%3D%271",
+      "is_injection": true,
+      "status_code": 200,
+      "response_time_ms": 9.17,
+      "data_returned": false,
+      "injection_successful": false,
+      "leakage_detected": false,
+      "passed": true
+    },
+    {
+      "test_id": "TC004_BLIND_INJECTION",
+      "description": "Time-based blind SQL injection with SLEEP",
+      "payload": "test' AND SLEEP(3)--",
+      "is_injection": true,
+      "status_code": 500,
+      "response_time_ms": 10.05,
+      "data_returned": false,
+      "injection_successful": false,
+      "leakage_detected": true,
+      "passed": true
+    },
+    {
+      "test_id": "TC005_MALFORMED_INPUT",
+      "description": "Excessively long random binary/malformed input",
+      "payload": "' UNION SELECT * FROM information_schema.tables--",
+      "is_injection": true,
+      "status_code": 500,
+      "response_time_ms": 9.13,
+      "data_returned": false,
+      "injection_successful": false,
+      "leakage_detected": true,
+      "passed": true
+    },
+    {
+      "test_id": "TC006_UNION_BASED_INJECTION",
+      "description": "UNION-based SQL injection to extract data",
+      "payload": "' UNION SELECT 1,2,3,4--",
+      "is_injection": true,
+      "status_code": 200,
+      "response_time_ms": 11.09,
+      "data_returned": true,
+      "injection_successful": true,
+      "leakage_detected": false,
+      "passed": false
+    }
+  ],
+  "metrics": {
+    "total_tests": 6,
+    "passed_tests": 4,
+    "failed_tests": 2,
+    "injection_success_count": 2,
+    "injection_success_rate": 40.0,
+    "avg_response_time_ms": 10.68,
+    "leakage_detected": true,
+    "security_score": 50.0
+  }
+}
