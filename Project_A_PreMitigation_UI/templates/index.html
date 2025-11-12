@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Vulnerable UI - Project A (Pre-Mitigation)</title>
+  <script src="/static/js/vuln.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .debug { background: #fee; padding: 10px; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Vulnerable UI - Pre-Mitigation</h1>
+  <form action="/submit" method="post" id="commentForm">
+    <label for="comment">Comment:</label><br>
+    <textarea id="comment" name="comment" rows="4" cols="50">Hello world</textarea><br>
+    <button type="submit">Submit</button>
+  </form>
+
+  <p>Debug Panel (Exposes secrets):</p>
+  <div class="debug" id="debugPanel">API Key: <span id="apiKey">{{ api_key }}</span></div>
+
+  <p>Use the comment form to inject content. This demo exposes unsafe behaviors intentionally for testing.</p>
+
+</body>
+</html>
