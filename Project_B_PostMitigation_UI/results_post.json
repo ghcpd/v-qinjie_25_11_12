@@ -1,0 +1,47 @@
+{
+  "summary": {
+    "total_tests": 5,
+    "xss_success_count": 0,
+    "secrets_exposed_count": 0,
+    "xss_success_pct": 0.0,
+    "secrets_exposed_pct": 0.0,
+    "security_score": 100
+  },
+  "tests": [
+    {
+      "test_id": "normal-01",
+      "payload": "Hello world!",
+      "expected": "Render the comment safely; no scripts executed; API key not exposed to DOM in explicit nodes.",
+      "result": "fail",
+      "error": "Page.fill: Timeout 30000ms exceeded.\nCall log:\nwaiting for locator(\"#comment\")\n"
+    },
+    {
+      "test_id": "reflected-xss-01",
+      "payload": "<script>window.__XSS_REFLECTED=true</script>",
+      "expected": "No alert or script execution; input rendered as text or encoded; no window.__XSS_REFLECTED variable created.",
+      "result": "fail",
+      "error": "Page.goto: Timeout 30000ms exceeded.\nCall log:\nnavigating to \"http://127.0.0.1:5001/?comment=%3Cscript%3Ewindow.__XSS_REFLECTED=true%3C/script%3E\", waiting until \"load\"\n"
+    },
+    {
+      "test_id": "dom-xss-01",
+      "payload": "<img src=x onerror=window.__XSS_DOM=1>",
+      "expected": "DOM insertion should not execute JS; image tag should not trigger onerror execution in vulnerable app, but will in vulnerable app. No global variable set in patched app.",
+      "result": "fail",
+      "error": "Page.goto: Timeout 30000ms exceeded.\nCall log:\nnavigating to \"http://127.0.0.1:5001/?comment=%3Cimg%20src=x%20onerror=window.__XSS_DOM=1%3E\", waiting until \"load\"\n"
+    },
+    {
+      "test_id": "secrets-exposure-01",
+      "payload": "--probe-for-secret--",
+      "expected": "Secrets like API keys should not be present in console logs, DOM text nodes, or localStorage in post-mitigation app",
+      "result": "fail",
+      "error": "Page.goto: Timeout 30000ms exceeded.\nCall log:\nnavigating to \"http://127.0.0.1:5001/?comment=--probe-for-secret--\", waiting until \"load\"\n"
+    },
+    {
+      "test_id": "malformed-edge-01",
+      "payload": "<script>alert('long' + 'str'.repeat(10000))</script>",
+      "expected": "Long, malformed payloads should be handled and not executed; UI should remain responsive",
+      "result": "fail",
+      "error": "Page.goto: Timeout 30000ms exceeded.\nCall log:\nnavigating to \"http://127.0.0.1:5001/?comment=%3Cscript%3Ealert(%27long%27%20+%20%27str%27.repeat(10000))%3C/script%3E\", waiting until \"load\"\n"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+[
+  {
+    "test_id": "normal-01",
+    "input_payload": "Hello world!",
+    "env": {"browser":"chromium","viewport":"1024x768","js":true},
+    "expected_behavior": "Render the comment safely; no scripts executed; API key not exposed to DOM in explicit nodes.",
+    "pass_criteria": "No alert fired; resulting DOM contains sanitized text, api key not created in new HTML nodes"
+  },
+  {
+    "test_id": "reflected-xss-01",
+    "input_payload": "<script>window.__XSS_REFLECTED=true</script>",
+    "env": {"browser":"chromium","viewport":"1024x768","js":true},
+    "expected_behavior": "No alert or script execution; input rendered as text or encoded; no window.__XSS_REFLECTED variable created.",
+    "pass_criteria": "No window.__XSS_REFLECTED global; no unexpected DOM script node executed"
+  },
+  {
+    "test_id": "dom-xss-01",
+    "input_payload": "<img src=x onerror=window.__XSS_DOM=1>",
+    "env": {"browser":"chromium","viewport":"1024x768","js":true},
+    "expected_behavior": "DOM insertion should not execute JS; image tag should not trigger onerror execution in vulnerable app, but will in vulnerable app. No global variable set in patched app.",
+    "pass_criteria": "No window.__XSS_DOM exists after click insertion"
+  },
+  {
+    "test_id": "secrets-exposure-01",
+    "input_payload": "--probe-for-secret--",
+    "env": {"browser":"chromium","viewport":"1024x768","js":true},
+    "expected_behavior": "Secrets like API keys should not be present in console logs, DOM text nodes, or localStorage in post-mitigation app",
+    "pass_criteria": "No API key string found in page content, localStorage, or captured console logs"
+  },
+  {
+    "test_id": "malformed-edge-01",
+    "input_payload": "<script>alert('long' + 'str'.repeat(10000))</script>",
+    "env": {"browser":"chromium","viewport":"640x480","js":true},
+    "expected_behavior": "Long, malformed payloads should be handled and not executed; UI should remain responsive",
+    "pass_criteria": "No alerts or JS execution; page load latency below threshold; text rendered or truncated safely"
+  }
+]
