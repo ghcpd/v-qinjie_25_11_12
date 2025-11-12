@@ -1,0 +1,11 @@
+{
+  "pre_attack_success": 75.0,
+  "post_attack_success": 0.0,
+  "reduction_pct": 75.0,
+  "pre_avg_latency": 1016.694974899292,
+  "post_avg_latency": 12.05592155456543,
+  "latency_change_ms": -1004.6390533447266,
+  "latency_pct_change": -98.81420466784941,
+  "score_pre": 25.0,
+  "score_post": 100.0
+}

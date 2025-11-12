@@ -1,0 +1,73 @@
+[
+  {
+    "test_id": "normal_query",
+    "input_payload": {
+      "params": {
+        "query": "alice"
+      }
+    },
+    "attack_succeeded": false,
+    "latency_ms": 5.287647247314453,
+    "resp": {
+      "results": [
+        {
+          "id": 1,
+          "username": "alice"
+        }
+      ]
+    },
+    "evidence": []
+  },
+  {
+    "test_id": "basic_injection",
+    "input_payload": {
+      "params": {
+        "query": "' OR '1'='1"
+      }
+    },
+    "attack_succeeded": false,
+    "latency_ms": 18.818140029907227,
+    "resp": "<!doctype html>\n<html lang=en>\n<title>400 Bad Request</title>\n<h1>Bad Request</h1>\n<p>Bad request</p>\n",
+    "evidence": [],
+    "passes": true
+  },
+  {
+    "test_id": "encoded_injection",
+    "input_payload": {
+      "params": {
+        "user": "%27%20OR%201%3D1",
+        "pwd": "whatever"
+      }
+    },
+    "attack_succeeded": false,
+    "latency_ms": 7.378101348876953,
+    "resp": {
+      "auth": "failed"
+    },
+    "evidence": []
+  },
+  {
+    "test_id": "timed_blind_injection",
+    "input_payload": {
+      "params": {
+        "q": "admin' OR SLEEP(5)--"
+      }
+    },
+    "attack_succeeded": false,
+    "latency_ms": 10.28585433959961,
+    "resp": "<!doctype html>\n<html lang=en>\n<title>400 Bad Request</title>\n<h1>Bad Request</h1>\n<p>Bad request</p>\n",
+    "evidence": []
+  },
+  {
+    "test_id": "malformed_input",
+    "input_payload": {
+      "params": {
+        "query": "\u0000\u0001\u0002AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+      }
+    },
+    "attack_succeeded": false,
+    "latency_ms": 18.509864807128906,
+    "resp": "<!doctype html>\n<html lang=en>\n<title>400 Bad Request</title>\n<h1>Bad Request</h1>\n<p>Bad request</p>\n",
+    "evidence": []
+  }
+]
