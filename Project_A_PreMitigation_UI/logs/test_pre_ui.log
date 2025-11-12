@@ -1,0 +1,148 @@
+2025-11-12 18:56:49,131 - INFO - Loaded 8 test cases
+2025-11-12 18:56:49,131 - INFO - ======================================================================
+2025-11-12 18:56:49,131 - INFO - Starting Pre-Mitigation UI Security Test Suite
+2025-11-12 18:56:49,131 - INFO - ======================================================================
+2025-11-12 18:56:49,131 - INFO - ====== WebDriver manager ======
+2025-11-12 18:56:50,572 - INFO - There is no [win64] chromedriver "latest" for browser google-chrome "142.0.7444.135" in cache
+2025-11-12 18:56:50,572 - INFO - Get LATEST chromedriver version for google-chrome
+2025-11-12 18:56:51,481 - ERROR - Failed to initialize WebDriver: No such driver version 142.0.7444.135 for win32
+2025-11-12 18:57:43,081 - INFO - Loaded 8 test cases
+2025-11-12 18:57:43,082 - INFO - ======================================================================
+2025-11-12 18:57:43,082 - INFO - Starting Pre-Mitigation UI Security Test Suite
+2025-11-12 18:57:43,082 - INFO - ======================================================================
+2025-11-12 18:57:43,082 - INFO - ====== WebDriver manager ======
+2025-11-12 18:57:44,334 - INFO - There is no [win64] chromedriver "latest" for browser google-chrome "142.0.7444.135" in cache
+2025-11-12 18:57:44,334 - INFO - Get LATEST chromedriver version for google-chrome
+2025-11-12 18:57:45,148 - WARNING - ChromeDriverManager failed: No such driver version 142.0.7444.135 for win32. Using default driver search.
+2025-11-12 18:57:52,903 - INFO - WebDriver initialized successfully
+2025-11-12 18:57:52,903 - INFO - Running TEST_001: Normal Input - Safe Rendering
+2025-11-12 18:57:55,413 - INFO - Running TEST_002: Reflected XSS - Script Alert
+2025-11-12 18:57:56,656 - INFO - Running TEST_003: DOM XSS - innerHTML Injection
+2025-11-12 18:57:57,866 - WARNING - XSS DETECTED: Alert triggered with message: DOM_XSS_EXECUTED
+2025-11-12 18:57:57,867 - INFO - Running TEST_004: Secrets Exposure - API Key Detection
+2025-11-12 18:57:59,948 - ERROR - Error in TEST_004: Alert Text: DOM_XSS_EXECUTED
+Message: unexpected alert open: {Alert text : DOM_XSS_EXECUTED}
+  (Session info: chrome=142.0.7444.135)
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6cec7e8e5+80021]
+	GetHandleVerifier [0x0x7ff6cec7e940+80112]
+	(No symbol) [0x0x7ff6cea0060f]
+	(No symbol) [0x0x7ff6ceaaa131]
+	(No symbol) [0x0x7ff6cea81003]
+	(No symbol) [0x0x7ff6cea495d1]
+	(No symbol) [0x0x7ff6cea4a3f3]
+	GetHandleVerifier [0x0x7ff6cef3dc7d+2960429]
+	GetHandleVerifier [0x0x7ff6cef37f3a+2936554]
+	GetHandleVerifier [0x0x7ff6cef58977+3070247]
+	GetHandleVerifier [0x0x7ff6cec983ce+185214]
+	GetHandleVerifier [0x0x7ff6cec9fe1f+216527]
+	GetHandleVerifier [0x0x7ff6cec87b24+117460]
+	GetHandleVerifier [0x0x7ff6cec87cdf+117903]
+	GetHandleVerifier [0x0x7ff6cec6dbb8+11112]
+	BaseThreadInitThunk [0x0x7ff9e079e8d7+23]
+	RtlUserThreadStart [0x0x7ff9e252c53c+44]
+
+2025-11-12 18:57:59,948 - INFO - Running TEST_005: Malformed Input - Special Characters & Encoding
+2025-11-12 18:58:00,017 - ERROR - Error in TEST_005: Alert Text: DOM_XSS_EXECUTED
+Message: unexpected alert open: {Alert text : DOM_XSS_EXECUTED}
+  (Session info: chrome=142.0.7444.135)
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6cec7e8e5+80021]
+	GetHandleVerifier [0x0x7ff6cec7e940+80112]
+	(No symbol) [0x0x7ff6cea0060f]
+	(No symbol) [0x0x7ff6ceaaa131]
+	(No symbol) [0x0x7ff6cea81003]
+	(No symbol) [0x0x7ff6cea495d1]
+	(No symbol) [0x0x7ff6cea4a3f3]
+	GetHandleVerifier [0x0x7ff6cef3dc7d+2960429]
+	GetHandleVerifier [0x0x7ff6cef37f3a+2936554]
+	GetHandleVerifier [0x0x7ff6cef58977+3070247]
+	GetHandleVerifier [0x0x7ff6cec983ce+185214]
+	GetHandleVerifier [0x0x7ff6cec9fe1f+216527]
+	GetHandleVerifier [0x0x7ff6cec87b24+117460]
+	GetHandleVerifier [0x0x7ff6cec87cdf+117903]
+	GetHandleVerifier [0x0x7ff6cec6dbb8+11112]
+	BaseThreadInitThunk [0x0x7ff9e079e8d7+23]
+	RtlUserThreadStart [0x0x7ff9e252c53c+44]
+
+2025-11-12 18:58:00,018 - INFO - Running TEST_006: Event Handler Injection - onclick
+2025-11-12 18:58:00,075 - ERROR - Error in TEST_006: Alert Text: DOM_XSS_EXECUTED
+Message: unexpected alert open: {Alert text : DOM_XSS_EXECUTED}
+  (Session info: chrome=142.0.7444.135)
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6cec7e8e5+80021]
+	GetHandleVerifier [0x0x7ff6cec7e940+80112]
+	(No symbol) [0x0x7ff6cea0060f]
+	(No symbol) [0x0x7ff6ceaaa131]
+	(No symbol) [0x0x7ff6cea81003]
+	(No symbol) [0x0x7ff6cea495d1]
+	(No symbol) [0x0x7ff6cea4a3f3]
+	GetHandleVerifier [0x0x7ff6cef3dc7d+2960429]
+	GetHandleVerifier [0x0x7ff6cef37f3a+2936554]
+	GetHandleVerifier [0x0x7ff6cef58977+3070247]
+	GetHandleVerifier [0x0x7ff6cec983ce+185214]
+	GetHandleVerifier [0x0x7ff6cec9fe1f+216527]
+	GetHandleVerifier [0x0x7ff6cec87b24+117460]
+	GetHandleVerifier [0x0x7ff6cec87cdf+117903]
+	GetHandleVerifier [0x0x7ff6cec6dbb8+11112]
+	BaseThreadInitThunk [0x0x7ff9e079e8d7+23]
+	RtlUserThreadStart [0x0x7ff9e252c53c+44]
+
+2025-11-12 18:58:00,075 - INFO - Running TEST_007: Data Exfiltration - localStorage Leak
+2025-11-12 18:58:00,125 - ERROR - Error in TEST_007: Alert Text: DOM_XSS_EXECUTED
+Message: unexpected alert open: {Alert text : DOM_XSS_EXECUTED}
+  (Session info: chrome=142.0.7444.135)
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6cec7e8e5+80021]
+	GetHandleVerifier [0x0x7ff6cec7e940+80112]
+	(No symbol) [0x0x7ff6cea0060f]
+	(No symbol) [0x0x7ff6ceaaa131]
+	(No symbol) [0x0x7ff6cea81003]
+	(No symbol) [0x0x7ff6cea495d1]
+	(No symbol) [0x0x7ff6cea4a3f3]
+	GetHandleVerifier [0x0x7ff6cef3dc7d+2960429]
+	GetHandleVerifier [0x0x7ff6cef37f3a+2936554]
+	GetHandleVerifier [0x0x7ff6cef58977+3070247]
+	GetHandleVerifier [0x0x7ff6cec983ce+185214]
+	GetHandleVerifier [0x0x7ff6cec9fe1f+216527]
+	GetHandleVerifier [0x0x7ff6cec87b24+117460]
+	GetHandleVerifier [0x0x7ff6cec87cdf+117903]
+	GetHandleVerifier [0x0x7ff6cec6dbb8+11112]
+	BaseThreadInitThunk [0x0x7ff9e079e8d7+23]
+	RtlUserThreadStart [0x0x7ff9e252c53c+44]
+
+2025-11-12 18:58:00,125 - INFO - Running TEST_008: SVG/XML XSS - onload Payload
+2025-11-12 18:58:00,184 - ERROR - Error in TEST_008: Alert Text: DOM_XSS_EXECUTED
+Message: unexpected alert open: {Alert text : DOM_XSS_EXECUTED}
+  (Session info: chrome=142.0.7444.135)
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6cec7e8e5+80021]
+	GetHandleVerifier [0x0x7ff6cec7e940+80112]
+	(No symbol) [0x0x7ff6cea0060f]
+	(No symbol) [0x0x7ff6ceaaa131]
+	(No symbol) [0x0x7ff6cea81003]
+	(No symbol) [0x0x7ff6cea495d1]
+	(No symbol) [0x0x7ff6cea4a3f3]
+	GetHandleVerifier [0x0x7ff6cef3dc7d+2960429]
+	GetHandleVerifier [0x0x7ff6cef37f3a+2936554]
+	GetHandleVerifier [0x0x7ff6cef58977+3070247]
+	GetHandleVerifier [0x0x7ff6cec983ce+185214]
+	GetHandleVerifier [0x0x7ff6cec9fe1f+216527]
+	GetHandleVerifier [0x0x7ff6cec87b24+117460]
+	GetHandleVerifier [0x0x7ff6cec87cdf+117903]
+	GetHandleVerifier [0x0x7ff6cec6dbb8+11112]
+	BaseThreadInitThunk [0x0x7ff9e079e8d7+23]
+	RtlUserThreadStart [0x0x7ff9e252c53c+44]
+
+2025-11-12 18:58:00,184 - INFO - Attack success rate: 12.5%
+2025-11-12 18:58:00,184 - INFO - Security score: 12.5
+2025-11-12 18:58:02,306 - INFO - WebDriver closed
+2025-11-12 18:58:02,308 - INFO - Results saved to C:\GenAI\Bug_Bash\25_11_12\Claude-Haiku-4.5_UI\v-qinjie_25_11_12\Project_A_PreMitigation_UI\results\results_pre.json
+2025-11-12 18:58:02,308 - INFO - ======================================================================
+2025-11-12 18:58:02,308 - INFO - Test Summary:
+2025-11-12 18:58:02,308 - INFO - Total Tests: 8
+2025-11-12 18:58:02,308 - INFO - Vulnerabilities Found: 1
+2025-11-12 18:58:02,308 - INFO - XSS Successful: 1
+2025-11-12 18:58:02,308 - INFO - Attack Success Rate: 12.5%
+2025-11-12 18:58:02,308 - INFO - Security Score: 12.5
+2025-11-12 18:58:02,308 - INFO - ======================================================================

@@ -1,0 +1,8 @@
+2025-11-12 18:56:54,207 - INFO - Loaded 8 test cases
+2025-11-12 18:56:54,207 - INFO - ======================================================================
+2025-11-12 18:56:54,207 - INFO - Starting Post-Mitigation UI Security Test Suite
+2025-11-12 18:56:54,207 - INFO - ======================================================================
+2025-11-12 18:56:54,207 - INFO - ====== WebDriver manager ======
+2025-11-12 18:56:55,503 - INFO - There is no [win64] chromedriver "latest" for browser google-chrome "142.0.7444.135" in cache
+2025-11-12 18:56:55,503 - INFO - Get LATEST chromedriver version for google-chrome
+2025-11-12 18:56:56,409 - ERROR - Failed to initialize WebDriver: No such driver version 142.0.7444.135 for win32

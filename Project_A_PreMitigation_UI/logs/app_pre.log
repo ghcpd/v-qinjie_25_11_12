@@ -1,0 +1,93 @@
+2025-11-12 18:51:10,260 - __main__ - INFO - Starting Pre-Mitigation Flask application...
+2025-11-12 18:51:10,260 - __main__ - WARNING - WARNING: This application contains intentional security vulnerabilities for testing purposes only!
+2025-11-12 18:51:10,720 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-11-12 18:51:10,720 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-11-12 18:51:10,736 - werkzeug - INFO -  * Restarting with stat
+2025-11-12 18:51:11,353 - __main__ - INFO - Starting Pre-Mitigation Flask application...
+2025-11-12 18:51:11,353 - __main__ - WARNING - WARNING: This application contains intentional security vulnerabilities for testing purposes only!
+2025-11-12 18:51:11,412 - werkzeug - WARNING -  * Debugger is active!
+2025-11-12 18:51:11,421 - werkzeug - INFO -  * Debugger PIN: 697-362-931
+2025-11-12 18:55:39,835 - __main__ - INFO - Starting Pre-Mitigation Flask application...
+2025-11-12 18:55:39,835 - __main__ - WARNING - WARNING: This application contains intentional security vulnerabilities for testing purposes only!
+2025-11-12 18:55:39,876 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-11-12 18:55:39,876 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-11-12 18:55:39,888 - werkzeug - INFO -  * Restarting with stat
+2025-11-12 18:55:40,476 - __main__ - INFO - Starting Pre-Mitigation Flask application...
+2025-11-12 18:55:40,476 - __main__ - WARNING - WARNING: This application contains intentional security vulnerabilities for testing purposes only!
+2025-11-12 18:55:40,496 - werkzeug - WARNING -  * Debugger is active!
+2025-11-12 18:55:40,509 - werkzeug - INFO -  * Debugger PIN: 697-362-931
+2025-11-12 18:56:12,572 - werkzeug - INFO -  * Detected change in 'C:\\GenAI\\Bug_Bash\\25_11_12\\Claude-Haiku-4.5_UI\\v-qinjie_25_11_12\\Project_A_PreMitigation_UI\\tests\\test_pre_ui.py', reloading
+2025-11-12 18:56:38,984 - __main__ - INFO - Starting Pre-Mitigation Flask application...
+2025-11-12 18:56:38,984 - __main__ - WARNING - WARNING: This application contains intentional security vulnerabilities for testing purposes only!
+2025-11-12 18:56:39,019 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-11-12 18:56:39,019 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-11-12 18:56:39,026 - werkzeug - INFO -  * Restarting with stat
+2025-11-12 18:56:39,537 - __main__ - INFO - Starting Pre-Mitigation Flask application...
+2025-11-12 18:56:39,537 - __main__ - WARNING - WARNING: This application contains intentional security vulnerabilities for testing purposes only!
+2025-11-12 18:56:39,557 - werkzeug - WARNING -  * Debugger is active!
+2025-11-12 18:56:39,569 - werkzeug - INFO -  * Debugger PIN: 697-362-931
+2025-11-12 18:57:10,830 - werkzeug - INFO -  * Detected change in 'C:\\GenAI\\Bug_Bash\\25_11_12\\Claude-Haiku-4.5_UI\\v-qinjie_25_11_12\\Project_A_PreMitigation_UI\\tests\\test_pre_ui.py', reloading
+2025-11-12 18:57:33,041 - __main__ - INFO - Starting Pre-Mitigation Flask application...
+2025-11-12 18:57:33,042 - __main__ - WARNING - WARNING: This application contains intentional security vulnerabilities for testing purposes only!
+2025-11-12 18:57:33,086 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-11-12 18:57:33,086 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-11-12 18:57:33,100 - werkzeug - INFO -  * Restarting with stat
+2025-11-12 18:57:33,785 - __main__ - INFO - Starting Pre-Mitigation Flask application...
+2025-11-12 18:57:33,785 - __main__ - WARNING - WARNING: This application contains intentional security vulnerabilities for testing purposes only!
+2025-11-12 18:57:33,818 - werkzeug - WARNING -  * Debugger is active!
+2025-11-12 18:57:33,834 - werkzeug - INFO -  * Debugger PIN: 697-362-931
+2025-11-12 18:57:52,927 - __main__ - INFO - Rendering index page (vulnerable)
+2025-11-12 18:57:52,934 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:57:52] "GET / HTTP/1.1" 200 -
+2025-11-12 18:57:53,163 - __main__ - INFO - Retrieving 0 comments
+2025-11-12 18:57:53,164 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:57:53] "GET /api/comments HTTP/1.1" 200 -
+2025-11-12 18:57:53,170 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:57:53] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-11-12 18:57:53,372 - __main__ - INFO - Received comment: Hello World, this is a test comment!...
+2025-11-12 18:57:53,372 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:57:53] "[35m[1mPOST /api/comments HTTP/1.1[0m" 201 -
+2025-11-12 18:57:53,424 - __main__ - INFO - Retrieving 1 comments
+2025-11-12 18:57:53,424 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:57:53] "GET /api/comments HTTP/1.1" 200 -
+2025-11-12 18:57:55,425 - __main__ - INFO - Rendering index page (vulnerable)
+2025-11-12 18:57:55,425 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:57:55] "GET / HTTP/1.1" 200 -
+2025-11-12 18:57:55,442 - __main__ - INFO - Retrieving 1 comments
+2025-11-12 18:57:55,443 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:57:55] "GET /api/comments HTTP/1.1" 200 -
+2025-11-12 18:57:55,652 - __main__ - INFO - Received comment: <script>alert('XSS_VULNERABILITY_DETECTED')</scrip...
+2025-11-12 18:57:55,653 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:57:55] "[35m[1mPOST /api/comments HTTP/1.1[0m" 201 -
+2025-11-12 18:57:55,659 - __main__ - INFO - Retrieving 2 comments
+2025-11-12 18:57:55,660 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:57:55] "GET /api/comments HTTP/1.1" 200 -
+2025-11-12 18:57:56,667 - __main__ - INFO - Rendering index page (vulnerable)
+2025-11-12 18:57:56,667 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:57:56] "GET / HTTP/1.1" 200 -
+2025-11-12 18:57:56,684 - __main__ - INFO - Retrieving 2 comments
+2025-11-12 18:57:56,684 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:57:56] "GET /api/comments HTTP/1.1" 200 -
+2025-11-12 18:57:56,856 - __main__ - INFO - Received comment: <img src=x onerror="alert('DOM_XSS_EXECUTED')">...
+2025-11-12 18:57:56,856 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:57:56] "[35m[1mPOST /api/comments HTTP/1.1[0m" 201 -
+2025-11-12 18:57:56,864 - __main__ - INFO - Retrieving 3 comments
+2025-11-12 18:57:56,864 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:57:56] "GET /api/comments HTTP/1.1" 200 -
+2025-11-12 18:57:56,873 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:57:56] "[33mGET /x HTTP/1.1[0m" 404 -
+2025-11-12 18:57:57,886 - __main__ - INFO - Rendering index page (vulnerable)
+2025-11-12 18:57:57,886 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:57:57] "GET / HTTP/1.1" 200 -
+2025-11-12 18:57:57,925 - __main__ - INFO - Retrieving 3 comments
+2025-11-12 18:57:57,926 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:57:57] "GET /api/comments HTTP/1.1" 200 -
+2025-11-12 18:57:57,937 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:57:57] "[33mGET /x HTTP/1.1[0m" 404 -
+2025-11-12 18:57:59,969 - __main__ - INFO - Rendering index page (vulnerable)
+2025-11-12 18:57:59,971 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:57:59] "GET / HTTP/1.1" 200 -
+2025-11-12 18:57:59,992 - __main__ - INFO - Retrieving 3 comments
+2025-11-12 18:57:59,993 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:57:59] "GET /api/comments HTTP/1.1" 200 -
+2025-11-12 18:57:59,999 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:57:59] "[33mGET /x HTTP/1.1[0m" 404 -
+2025-11-12 18:58:00,038 - __main__ - INFO - Rendering index page (vulnerable)
+2025-11-12 18:58:00,040 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:58:00] "GET / HTTP/1.1" 200 -
+2025-11-12 18:58:00,059 - __main__ - INFO - Retrieving 3 comments
+2025-11-12 18:58:00,060 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:58:00] "GET /api/comments HTTP/1.1" 200 -
+2025-11-12 18:58:00,065 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:58:00] "[33mGET /x HTTP/1.1[0m" 404 -
+2025-11-12 18:58:00,091 - __main__ - INFO - Rendering index page (vulnerable)
+2025-11-12 18:58:00,093 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:58:00] "GET / HTTP/1.1" 200 -
+2025-11-12 18:58:00,100 - __main__ - INFO - Retrieving 3 comments
+2025-11-12 18:58:00,100 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:58:00] "GET /api/comments HTTP/1.1" 200 -
+2025-11-12 18:58:00,115 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:58:00] "[33mGET /x HTTP/1.1[0m" 404 -
+2025-11-12 18:58:00,128 - __main__ - INFO - Rendering index page (vulnerable)
+2025-11-12 18:58:00,140 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:58:00] "GET / HTTP/1.1" 200 -
+2025-11-12 18:58:00,155 - __main__ - INFO - Retrieving 3 comments
+2025-11-12 18:58:00,155 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:58:00] "GET /api/comments HTTP/1.1" 200 -
+2025-11-12 18:58:00,155 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:58:00] "[33mGET /x HTTP/1.1[0m" 404 -

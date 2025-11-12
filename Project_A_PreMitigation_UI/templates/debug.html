@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Panel - Pre-Mitigation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #252526;
+            border: 1px solid #3e3e42;
+            border-radius: 4px;
+            padding: 20px;
+        }
+        
+        h1 {
+            color: #ce9178;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ce9178;
+            padding-bottom: 10px;
+        }
+        
+        .debug-section {
+            margin-bottom: 30px;
+            padding: 15px;
+            background: #1e1e1e;
+            border-left: 3px solid #d7ba7d;
+            border-radius: 4px;
+        }
+        
+        .debug-section h2 {
+            color: #d7ba7d;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .secret-value {
+            background: #1f1f1f;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 3px;
+            border-left: 2px solid #f48771;
+            word-break: break-all;
+            font-size: 12px;
+        }
+        
+        .warning {
+            background: #5d2a2a;
+            color: #ff6b6b;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border-left: 3px solid #ff6b6b;
+        }
+        
+        .warning strong {
+            color: #ff8787;
+        }
+        
+        .label {
+            color: #9cdcfe;
+            font-weight: bold;
+        }
+        
+        .value {
+            color: #ce9178;
+        }
+        
+        a {
+            color: #569cd6;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        code {
+            background: #1f1f1f;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #d4d4d4;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 12px;
+        }
+        
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #3e3e42;
+        }
+        
+        th {
+            background: #2d2d30;
+            color: #9cdcfe;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 Debug Panel - Exposed Secrets (VULNERABLE)</h1>
+        
+        <div class="warning">
+            <strong>⚠️ CRITICAL SECURITY ISSUE:</strong> This debug panel exposes sensitive information including API keys, database passwords, and authentication tokens. This is a severe information disclosure vulnerability!
+        </div>
+        
+        <!-- API Key Section -->
+        <div class="debug-section">
+            <h2>🔑 API Key (Hardcoded)</h2>
+            <div class="warning">
+                Hardcoded API key found in frontend JavaScript and backend configuration!
+            </div>
+            <div class="secret-value">
+                <span class="label">API Key:</span><br>
+                <span class="value">{{ debug_data.api_key }}</span>
+            </div>
+            <p style="font-size: 12px; color: #858585; margin-top: 8px;">
+                ❌ This key should <strong>NEVER</strong> be hardcoded in source code or frontend applications.
+            </p>
+        </div>
+        
+        <!-- Database Password Section -->
+        <div class="debug-section">
+            <h2>🗄️ Database Password</h2>
+            <div class="warning">
+                Database credentials exposed in debug output!
+            </div>
+            <div class="secret-value">
+                <span class="label">DB Password:</span><br>
+                <span class="value">{{ debug_data.db_password }}</span>
+            </div>
+            <p style="font-size: 12px; color: #858585; margin-top: 8px;">
+                ❌ Database credentials should be stored in secure vaults or environment variables, never in code.
+            </p>
+        </div>
+        
+        <!-- Authentication Token Section -->
+        <div class="debug-section">
+            <h2>🎫 Authentication Token (JWT)</h2>
+            <div class="warning">
+                Admin authentication token exposed!
+            </div>
+            <div class="secret-value">
+                <span class="label">Admin Token:</span><br>
+                <span class="value">{{ debug_data.admin_token }}</span>
+            </div>
+            <p style="font-size: 12px; color: #858585; margin-top: 8px;">
+                ❌ JWT tokens should never be exposed to unauthenticated users or in debug panels.
+            </p>
+        </div>
+        
+        <!-- Application Data -->
+        <div class="debug-section">
+            <h2>📊 Application Data</h2>
+            <table>
+                <tr>
+                    <th>Property</th>
+                    <th>Value</th>
+                </tr>
+                <tr>
+                    <td><span class="label">Timestamp</span></td>
+                    <td><span class="value">{{ debug_data.timestamp }}</span></td>
+                </tr>
+                <tr>
+                    <td><span class="label">Comments Count</span></td>
+                    <td><span class="value">{{ debug_data.comments_count }}</span></td>
+                </tr>
+                <tr>
+                    <td><span class="label">Environment</span></td>
+                    <td><span class="value">Multiple environment variables exposed</span></td>
+                </tr>
+            </table>
+        </div>
+        
+        <!-- Environment Variables Section -->
+        <div class="debug-section">
+            <h2>🌍 Environment Variables (Sample)</h2>
+            <table>
+                <tr>
+                    <th>Variable</th>
+                    <th>Value (Redacted)</th>
+                </tr>
+                {% for key, value in debug_data.environment.items() %}
+                    {% if key|upper in ['PATH', 'HOME', 'APPDATA', 'TEMP', 'PYTHONPATH'] %}
+                    <tr>
+                        <td><code>{{ key }}</code></td>
+                        <td>{{ value[:50] }}...</td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+        
+        <!-- Vulnerability Summary -->
+        <div class="debug-section" style="background: #5d2a2a; border-left-color: #ff6b6b;">
+            <h2 style="color: #ff8787;">🚨 Vulnerability Summary</h2>
+            <ul style="color: #ff6b6b; margin-left: 20px;">
+                <li>✗ Information Disclosure - Secrets exposed in debug panel</li>
+                <li>✗ Hardcoded credentials in source code</li>
+                <li>✗ No authentication on debug endpoints</li>
+                <li>✗ Environment variables accessible to users</li>
+                <li>✗ API keys visible in frontend code</li>
+                <li>✗ No rate limiting or access control</li>
+            </ul>
+        </div>
+        
+        <!-- Remediation Link -->
+        <div style="margin-top: 30px; text-align: center;">
+            <p style="color: #858585;">To see how these vulnerabilities are fixed:</p>
+            <a href="/remediation-info" style="display: inline-block; padding: 10px 20px; background: #569cd6; color: white; text-decoration: none; border-radius: 4px; margin: 10px;">View Post-Mitigation Version</a>
+        </div>
+    </div>
+</body>
+</html>
