@@ -1,0 +1,42 @@
+[
+  {
+    "test_id": "TC01_normal_input",
+    "description": "Normal safe input renders correctly",
+    "input_payload": {"comment": "Hello, this is a safe comment!"},
+    "env": {"browser": "chromium", "viewport": "1024x768", "js_enabled": true},
+    "expected_behavior": "Comment displays exactly as entered; no alerts; no script nodes",
+    "pass_criteria": "Displayed text matches input, no DOM or alert side-effects"
+  },
+  {
+    "test_id": "TC02_reflected_xss",
+    "description": "Reflected XSS via comment submission",
+    "input_payload": {"comment": "<script>alert('xss')</script>"},
+    "env": {"browser": "chromium", "viewport": "1366x768", "js_enabled": true},
+    "expected_behavior": "No alert; scripts are escaped or removed; raw script tag not executed",
+    "pass_criteria": "No dialog popup captured by Playwright; string appears escaped"
+  },
+  {
+    "test_id": "TC03_dom_xss",
+    "description": "DOM XSS through hash-based or innerHTML injection",
+    "input_payload": {"hash": "<img src=x onerror=alert('dom-xss')/>"},
+    "env": {"browser": "chromium", "viewport": "1024x768", "js_enabled": true},
+    "expected_behavior": "No onerror or JS executed; no new script or linked event handlers in DOM",
+    "pass_criteria": "No dialog; no dynamically created script or event handlers" 
+  },
+  {
+    "test_id": "TC04_secrets_exposure",
+    "description": "Attempt to read front-end embedded API keys or debug info",
+    "input_payload": {"action": "inspect_secret"},
+    "env": {"browser": "chromium", "viewport": "1366x768", "js_enabled": true},
+    "expected_behavior": "No API keys present in DOM or console logs; sensitive fields masked",
+    "pass_criteria": "No visible or accessible secret strings; console output contains no apparent keys"
+  },
+  {
+    "test_id": "TC05_malformed_edge",
+    "description": "Large and encoded payloads and special characters",
+    "input_payload": {"comment": "'\\\"<svg onload=alert(1)>&#x3C/script>\\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"},
+    "env": {"browser": "chromium", "viewport": "375x812", "js_enabled": true},
+    "expected_behavior": "No XSS; input is truncated or escaped; UI remains responsive",
+    "pass_criteria": "No JavaScript alert; page responds within 2s; comment safely shows start of text"
+  }
+]
