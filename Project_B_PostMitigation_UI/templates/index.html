@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Patched UI - Project B (Post-Mitigation)</title>
+  <script src="/static/js/safe.js"></script>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self';">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .debug { background: #eef; padding: 10px; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Patched UI - Post-Mitigation</h1>
+  <form action="/submit" method="post" id="commentForm">
+    <label for="comment">Comment:</label><br>
+    <textarea id="comment" name="comment" rows="4" cols="50">Hello world</textarea><br>
+    <button type="submit">Submit</button>
+  </form>
+
+  <p>Debug Panel (Masked):</p>
+  <div class="debug" id="debugPanel">API Key: <span id="apiKey">{{ api_key }}</span></div>
+
+  <p>Notes: This UI uses safe rendering, textContent, CSP headers, and does not leak secrets.</p>
+</body>
+</html>

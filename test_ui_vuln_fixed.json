@@ -1,0 +1,42 @@
+[
+  {
+    "test_id": "normal_input",
+    "input_payload": "Hello, world!",
+    "trigger": "submit",
+    "env": {"browser":"chromium", "viewport":"1280x720", "js":true},
+    "expected_behavior": "Renders text with no alerts or script execution.",
+    "pass_criteria": "No alert, no script tags injected, no secret exposure in DOM/localStorage/console."
+  },
+  {
+    "test_id": "reflected_xss",
+    "input_payload": "<script>alert('xss')</script>",
+    "trigger": "submit",
+    "env": {"browser":"chromium", "viewport":"1280x720", "js":true},
+    "expected_behavior": "Payload must not execute; no alert should occur.",
+    "pass_criteria": "No alert, no script tags in DOM, no console messages from payload."
+  },
+  {
+    "test_id": "dom_xss",
+    "input_payload": "<img src=x onerror=alert('dom-xss')>",
+    "trigger": "dangerous",
+    "env": {"browser":"chromium", "viewport":"1024x768", "js":true},
+    "expected_behavior": "Payload inserted via dangerous query param should not execute.",
+    "pass_criteria": "No alert, no script or inline event handler executed, payload rendered as text only."
+  },
+  {
+    "test_id": "secrets_exposure",
+    "input_payload": "N/A",
+    "trigger": "secrets",
+    "env": {"browser":"chromium", "viewport":"1280x720", "js":true},
+    "expected_behavior": "API keys or tokens are not visible in DOM/localStorage/console.",
+    "pass_criteria": "No raw API key present in DOM, no localStorage key, no console logs containing api key."
+  },
+  {
+    "test_id": "malformed_edge",
+    "input_payload": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA<script>evil()</script>",
+    "trigger": "submit",
+    "env": {"browser":"chromium", "viewport":"375x667", "js":true},
+    "expected_behavior": "Handles long and malformed inputs without XSS or UI breakage.",
+    "pass_criteria": "No alert, UI renders safely, no script tags injected."
+  }
+]

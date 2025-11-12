@@ -1,0 +1,52 @@
+{
+  "results": [
+    {
+      "test_id": "normal_input",
+      "attack_success": false,
+      "secret_leak": false,
+      "dom_injection": false,
+      "console_messages": [
+        "Failed to load resource: the server responded with a status of 500 (INTERNAL SERVER ERROR)"
+      ],
+      "screenshot": "C:\\GenAI\\Bug_Bash\\25_11_12\\S435\\v-qinjie_25_11_12\\Project_B_PostMitigation_UI\\results\\post_normal_input.png"
+    },
+    {
+      "test_id": "reflected_xss",
+      "attack_success": false,
+      "secret_leak": false,
+      "dom_injection": false,
+      "console_messages": [],
+      "screenshot": "C:\\GenAI\\Bug_Bash\\25_11_12\\S435\\v-qinjie_25_11_12\\Project_B_PostMitigation_UI\\results\\post_reflected_xss.png"
+    },
+    {
+      "test_id": "dom_xss",
+      "attack_success": false,
+      "secret_leak": false,
+      "dom_injection": false,
+      "console_messages": [],
+      "screenshot": "C:\\GenAI\\Bug_Bash\\25_11_12\\S435\\v-qinjie_25_11_12\\Project_B_PostMitigation_UI\\results\\post_dom_xss.png"
+    },
+    {
+      "test_id": "secrets_exposure",
+      "attack_success": false,
+      "secret_leak": false,
+      "dom_injection": false,
+      "console_messages": [],
+      "screenshot": "C:\\GenAI\\Bug_Bash\\25_11_12\\S435\\v-qinjie_25_11_12\\Project_B_PostMitigation_UI\\results\\post_secrets_exposure.png"
+    },
+    {
+      "test_id": "malformed_edge",
+      "attack_success": false,
+      "secret_leak": false,
+      "dom_injection": false,
+      "console_messages": [],
+      "screenshot": "C:\\GenAI\\Bug_Bash\\25_11_12\\S435\\v-qinjie_25_11_12\\Project_B_PostMitigation_UI\\results\\post_malformed_edge.png"
+    }
+  ],
+  "metrics": {
+    "total_tests": 5,
+    "attack_success_count": 0,
+    "secret_exposure_count": 0,
+    "attack_success_rate": 0.0
+  }
+}
