@@ -1,0 +1,166 @@
+# Role
+
+You are a software engineer responsible for implementing and testing the capabilities of AI models on the **Vulnerability Detection & Mitigation** subtype within the **Security** category, with a focus on **UI-related vulnerabilities**.
+
+Your task is to provide two separate, complete **Python projects (pre-/post-mitigation)** that demonstrate detection, exploitation prevention, and patch validation of **front-end/UI security vulnerabilities**, such as XSS, sensitive data exposure, and unsafe client-side scripts. Each project must be self-contained, reproducible, and include automated tests to validate whether vulnerabilities are correctly detected, mitigated, and reported.
+
+---
+
+# Title
+
+Evaluation of S180, S390, S430-v2, Claude Haiku 4.5, and GPT-5-mini on Security – UI-Related Vulnerability Detection & Mitigation
+
+---
+
+# Description
+
+This experiment evaluates AI models’ ability to identify, exploit, and fix **UI/frontend security vulnerabilities** in a controlled web application.
+
+The canonical scenario: a web application contains input fields and interactive UI components vulnerable to **XSS attacks** and **secrets exposure** (e.g., API keys in front-end code, sensitive info displayed in debug panels). The **pre-mitigation** project exposes these vulnerabilities, while the **post-mitigation** project applies best practices (input sanitization, Content Security Policy, masking sensitive UI elements, safe DOM updates).
+
+Key evaluation points:
+
+* Reproducible UI vulnerabilities (reflected in input fields, buttons, modals, and displayed content).
+* Correctness and completeness of applied mitigations (no XSS, no secrets exposed).
+* Quantitative security improvement metrics (vulnerability detection rate, exploit success rate).
+* Robust handling of edge cases (malicious payloads, malformed input, user interactions).
+* Automated tests, reproducible environment, one-click execution, and comparison report.
+
+---
+
+# Requirements for the AI Model Output
+
+## Test Scenario & Description
+
+Clearly describe the UI security test scenario (e.g., user comment box, login form, admin panel).
+
+Specify expected input/output for tests (e.g., `{"comment":"<script>alert('xss')</script>"}` → sanitized rendering, no alert).
+
+Acceptance criteria:
+
+* All UI inputs are sanitized and safe for rendering.
+* Sensitive data (API keys, tokens) are never exposed in the DOM or console.
+* No persistent XSS or DOM-based XSS possible.
+* Response time and UI rendering are unaffected by mitigation.
+
+---
+
+## Test Data Generation
+
+Provide ≥5 structured UI security test cases (save as `test_ui_vuln.json`) covering:
+
+1. **Normal Input** — safe input renders correctly.
+2. **Reflected XSS** — `<script>alert(1)</script>` in form input.
+3. **DOM XSS** — payload inserted via dynamic JS/innerHTML.
+4. **Secrets Exposure** — attempt to inspect hidden API keys or debug info in UI.
+5. **Malformed / Edge Input** — long strings, special characters, encoded scripts.
+
+Each test case must include:
+`test_id`, `input_payload`, simulated environment vars (browser type, viewport, JS enabled), `expected_behavior`, and `pass/fail criteria`.
+
+---
+
+## Reproducible Environment
+
+Provide:
+
+* `requirements.txt` (Flask + frontend JS) or Node.js package setup.
+* `setup.sh` or `Dockerfile` for environment reproducibility.
+* Instructions to start Project A and Project B, simulate attacks, and run automated tests.
+
+---
+
+## Test Code
+
+Produce executable Python test scripts (e.g., **Selenium**, **Playwright**, or **Cypress**) that:
+
+a. Launch the web UI (Project A or B).
+b. Execute attack payloads from `test_ui_vuln.json`.
+c. Detect whether XSS executes (alerts, injected DOM nodes).
+d. Detect secrets exposed in DOM, localStorage, or console logs.
+e. Measure latency and page rendering impact.
+f. Produce `results_pre.json` / `results_post.json` with metrics (success rate, leakage flags).
+g. Compute evaluation metrics: attack success %, secret exposure %, security score (0–100).
+
+Tests must run via `run_ui_tests.sh` and accept parameters (repeat count, browser type, viewport size).
+
+---
+
+## Execution Scripts
+
+Each project must include `run_ui_tests.sh` that:
+
+* Installs dependencies,
+* Starts the server,
+* Runs UI security tests,
+* Collects artifacts (`screenshots`, `logs`, `results`),
+* Stops the server.
+
+Provide a root `run_all_ui.sh` that runs both projects sequentially and produces a `compare_ui_security_report.md`.
+
+---
+
+## Expected Output
+
+For each test case produce:
+
+* `results_pre.json` / `results_post.json` (attack success %, secret exposure flag, rendering correctness).
+* Screenshots showing XSS execution or mitigation.
+* `compare_ui_security_report.md` including:
+
+  * Vulnerability occurrence reduction,
+  * Secrets exposure reduction,
+  * XSS exploit success rate drop,
+  * Summary of resolved issues.
+
+Numeric thresholds for success:
+
+* XSS success rate ↓ ≥ 95%.
+* Secrets exposure ↓ 100%.
+* No JavaScript or DOM errors exposed to end users.
+
+---
+
+## Documentation / Explanation
+
+Provide `README.md` describing:
+
+* Setup, run instructions, and interpretation of results.
+* Explanation of each UI vulnerability scenario.
+* Limitations (simplified front-end app, not full enterprise app).
+* Recommendations: input sanitization, CSP headers, secure JS coding, secret masking, automated visual and security regression tests.
+
+---
+
+# Deliverables
+
+### Project A – Pre-Mitigation (Vulnerable UI)
+
+Folder: `Project_A_PreMitigation_UI`
+
+* `src/` — vulnerable Flask + JS frontend with XSS and secrets exposed.
+* `public/`, `templates/`, `tests/`, `logs/`, `results/`.
+* Automated test harness (`test_pre_ui.py`) and run scripts.
+
+### Project B – Post-Mitigation (Patched UI)
+
+Folder: `Project_B_PostMitigation_UI`
+
+* `src/` — patched frontend with input sanitization, safe DOM updates, CSP, and secret masking.
+* `public/`, `templates/`, `tests/`, `logs/`, `results/`.
+* Automated test harness (`test_post_ui.py`) with same test input data.
+
+### Shared Artifacts
+
+* `test_ui_vuln.json`
+* `compare_ui_security_report.md`
+* `run_all_ui.sh`
+* Aggregated metrics in `results/`
+* Root-level `README.md`
+
+---
+
+# Goal
+
+Deliver two reproducible project folders demonstrating **UI-related vulnerability detection and mitigation**, supported by measurable test results, security improvement metrics, and a final comparison report. All results, scripts, and documentation must enable **one-command reproducibility** and transparent evaluation of the AI model’s reasoning in securing UI/frontend components.
+
