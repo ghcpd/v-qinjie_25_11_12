@@ -1,0 +1,44 @@
+{
+  "tests": [
+    {
+      "test_id": "normal_search",
+      "endpoint": "/search?query=alice",
+      "input_payload": "alice",
+      "simulated_env": {"db_size": "small", "baseline_latency_ms": 50},
+      "expected_behavior": {"max_latency": 0.2, "expected_rows": 1},
+      "pass_criteria": "returns 1 row; no secret leaked"
+    },
+    {
+      "test_id": "login_basic",
+      "endpoint": "/login?username=alice&password=%27%20OR%20%271%27%3D%271",
+      "input_payload": "' OR '1'='1",
+      "simulated_env": {"db_size": "small", "baseline_latency_ms": 60},
+      "expected_behavior": {"max_latency": 0.2},
+      "pass_criteria": "should not authenticate unless correct credentials" 
+    },
+    {
+      "test_id": "encoded_injection",
+      "endpoint": "/search?query=%27%20OR%201%3D1",
+      "input_payload": "%27%20OR%201%3D1",
+      "simulated_env": {"db_size": "small"},
+      "expected_behavior": {"max_latency": 0.2},
+      "pass_criteria": "no secret leaked; blocked or returns empty"
+    },
+    {
+      "test_id": "blind_time_sqli",
+      "endpoint": "/login?username=alice&password=%27%20OR%20sleep(5)%20--",
+      "input_payload": "' OR sleep(5) --",
+      "simulated_env": {"db_size": "small"},
+      "expected_behavior": {"max_latency": 4.0},
+      "pass_criteria": "patched app returns quickly; pre-mitigation sleeps causing high latency"
+    },
+    {
+      "test_id": "malformed_input",
+      "endpoint": "/search?query=\u0000\u0000\u0001",
+      "input_payload": "binary\u0000\u0000\u0001",
+      "simulated_env": {"db_size": "small"},
+      "expected_behavior": {"max_latency": 0.5},
+      "pass_criteria": "should not crash; returns 400/empty"
+    }
+  ]
+}
