@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Patched UI - Post Mitigation</title>
+</head>
+<body>
+  <h1>Comment Box (Patched)</h1>
+  <form id="commentForm" action="/submit" method="post">
+    <textarea name="comment" id="commentInput" rows="4" cols="50"></textarea><br>
+    <button type="submit">Submit</button>
+  </form>
+
+  <h2>Comments (sanitized)</h2>
+  <div id="comments">
+    {% for c in comments %}
+      <div class="comment">{{ c }}</div>
+    {% endfor %}
+  </div>
+
+  <h2>Debug Panel (masked)</h2>
+  <div id="debug">API KEY: <span id="api-key">*******</span></div>
+
+  <h2>DOM XSS demo (safe)</h2>
+  <div id="hashArea"></div>
+  <script src="/static/js/safe.js"></script>
+</body>
+</html>
