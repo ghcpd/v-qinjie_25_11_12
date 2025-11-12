@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .search-query {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Search Results</h1>
+    
+    <!-- SECURITY: Safe rendering using textContent -->
+    <div class="search-query">
+        <p>You searched for: <span id="query-display"></span></p>
+    </div>
+
+    <script>
+        // SECURITY: Safe DOM manipulation using textContent
+        const query = {{ query|tojson }};
+        // SECURITY: Use textContent instead of innerHTML
+        document.getElementById('query-display').textContent = query;
+    </script>
+</body>
+</html>
+

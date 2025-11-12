@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .search-query {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Search Results</h1>
+    
+    <!-- VULNERABILITY: Reflected XSS in search query -->
+    <div class="search-query">
+        <p>You searched for: <span id="query-display">{{ query|safe }}</span></p>
+    </div>
+
+    <script>
+        // VULNERABILITY: DOM-based XSS
+        const query = "{{ query|safe }}";
+        document.getElementById('query-display').innerHTML = query; // VULNERABILITY: Unsafe innerHTML
+    </script>
+</body>
+</html>
+

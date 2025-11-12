@@ -1,0 +1,111 @@
+{
+  "project": "Project_A_PreMitigation_UI",
+  "timestamp": "2025-11-12 17:41:14",
+  "test_results": [
+    {
+      "test_id": "TC001",
+      "test_name": "Normal Input",
+      "payload": "Hello, this is a safe comment!",
+      "runs": [
+        {
+          "run_number": 1,
+          "error": "Timeout 30000ms exceeded.",
+          "xss_detected": false,
+          "secrets_exposed": false,
+          "page_rendered": false
+        }
+      ]
+    },
+    {
+      "test_id": "TC002",
+      "test_name": "Reflected XSS - Script Tag",
+      "payload": "<script>alert('XSS')</script>",
+      "runs": [
+        {
+          "run_number": 1,
+          "error": "Timeout 30000ms exceeded.",
+          "xss_detected": false,
+          "secrets_exposed": false,
+          "page_rendered": false
+        }
+      ]
+    },
+    {
+      "test_id": "TC003",
+      "test_name": "DOM XSS - innerHTML Injection",
+      "payload": "<img src=x onerror=alert('DOM XSS')>",
+      "runs": [
+        {
+          "run_number": 1,
+          "error": "Timeout 30000ms exceeded.",
+          "xss_detected": false,
+          "secrets_exposed": false,
+          "page_rendered": false
+        }
+      ]
+    },
+    {
+      "test_id": "TC004",
+      "test_name": "Secrets Exposure - API Key Detection",
+      "payload": "normal_user_input",
+      "runs": [
+        {
+          "run_number": 1,
+          "error": "Timeout 30000ms exceeded.",
+          "xss_detected": false,
+          "secrets_exposed": false,
+          "page_rendered": false
+        }
+      ]
+    },
+    {
+      "test_id": "TC005",
+      "test_name": "Malformed Input - Encoded Script",
+      "payload": "javascript:alert(String.fromCharCode(88,83,83))",
+      "runs": [
+        {
+          "run_number": 1,
+          "error": "Timeout 30000ms exceeded.",
+          "xss_detected": false,
+          "secrets_exposed": false,
+          "page_rendered": false
+        }
+      ]
+    },
+    {
+      "test_id": "TC006",
+      "test_name": "Edge Case - Long String",
+      "payload": "ABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+      "runs": [
+        {
+          "run_number": 1,
+          "error": "Timeout 30000ms exceeded.",
+          "xss_detected": false,
+          "secrets_exposed": false,
+          "page_rendered": false
+        }
+      ]
+    },
+    {
+      "test_id": "TC007",
+      "test_name": "Edge Case - Special Characters",
+      "payload": "<>&\"'`;{}[]()=+*%$#@!",
+      "runs": [
+        {
+          "run_number": 1,
+          "error": "Timeout 30000ms exceeded.",
+          "xss_detected": false,
+          "secrets_exposed": false,
+          "page_rendered": false
+        }
+      ]
+    }
+  ],
+  "metrics": {
+    "total_tests": 7,
+    "total_runs": 7,
+    "xss_attack_success_rate": 0.0,
+    "secrets_exposure_rate": 0.0,
+    "security_score": 100.0
+  }
+}
