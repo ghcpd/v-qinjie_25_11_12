@@ -1,0 +1,48 @@
+{
+  "results": [
+    {
+      "test_id": "normal_search",
+      "elapsed": 0.005918264389038086,
+      "success": false,
+      "leak": false,
+      "status_code": 200
+    },
+    {
+      "test_id": "login_basic",
+      "elapsed": 0.02238011360168457,
+      "success": true,
+      "leak": false,
+      "status_code": 200
+    },
+    {
+      "test_id": "encoded_injection",
+      "elapsed": 0.003812551498413086,
+      "success": false,
+      "leak": false,
+      "status_code": 500
+    },
+    {
+      "test_id": "blind_time_sqli",
+      "elapsed": 15.031779766082764,
+      "success": true,
+      "leak": false,
+      "status_code": 200
+    },
+    {
+      "test_id": "malformed_input",
+      "elapsed": 0.017893552780151367,
+      "success": false,
+      "leak": false,
+      "status_code": 500
+    }
+  ],
+  "metrics": {
+    "attack_success_rate": 40.0,
+    "avg_latency": 3.01635684967041,
+    "leaks": 0,
+    "evidence": [
+      "time_based_sqli",
+      "structure_based_sqli"
+    ]
+  }
+}
