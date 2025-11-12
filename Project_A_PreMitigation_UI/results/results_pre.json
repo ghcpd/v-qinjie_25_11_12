@@ -1,0 +1,106 @@
+{
+  "project": "Project_A_PreMitigation_UI",
+  "timestamp": "2025-11-12T18:57:43.081231",
+  "test_cases": [
+    {
+      "test_id": "TEST_001",
+      "test_name": "Normal Input - Safe Rendering",
+      "category": "normal_input",
+      "passed": true,
+      "vulnerabilities_detected": [],
+      "details": {
+        "xss_attempted": false
+      }
+    },
+    {
+      "test_id": "TEST_002",
+      "test_name": "Reflected XSS - Script Alert",
+      "category": "reflected_xss",
+      "passed": true,
+      "vulnerabilities_detected": [],
+      "xss_successful": false,
+      "details": {
+        "xss_attempted": false,
+        "alert_text": null
+      }
+    },
+    {
+      "test_id": "TEST_003",
+      "test_name": "DOM XSS - innerHTML Injection",
+      "category": "dom_xss",
+      "passed": false,
+      "vulnerabilities_detected": [
+        "DOM XSS VULNERABILITY: Event handler executed"
+      ],
+      "xss_successful": true,
+      "details": {
+        "xss_attempted": true
+      }
+    },
+    {
+      "test_id": "TEST_004",
+      "test_name": "Secrets Exposure - API Key Detection",
+      "category": "secrets_exposure",
+      "passed": true,
+      "vulnerabilities_detected": [
+        "Test execution error: Alert Text: DOM_XSS_EXECUTED\nMessage: unexpected alert open: {Alert text : DOM_XSS_EXECUTED}\n  (Session info: chrome=142.0.7444.135)\nStacktrace:\n\tGetHandleVerifier [0x0x7ff6cec7e8e5+80021]\n\tGetHandleVerifier [0x0x7ff6cec7e940+80112]\n\t(No symbol) [0x0x7ff6cea0060f]\n\t(No symbol) [0x0x7ff6ceaaa131]\n\t(No symbol) [0x0x7ff6cea81003]\n\t(No symbol) [0x0x7ff6cea495d1]\n\t(No symbol) [0x0x7ff6cea4a3f3]\n\tGetHandleVerifier [0x0x7ff6cef3dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff6cef37f3a+2936554]\n\tGetHandleVerifier [0x0x7ff6cef58977+3070247]\n\tGetHandleVerifier [0x0x7ff6cec983ce+185214]\n\tGetHandleVerifier [0x0x7ff6cec9fe1f+216527]\n\tGetHandleVerifier [0x0x7ff6cec87b24+117460]\n\tGetHandleVerifier [0x0x7ff6cec87cdf+117903]\n\tGetHandleVerifier [0x0x7ff6cec6dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ff9e079e8d7+23]\n\tRtlUserThreadStart [0x0x7ff9e252c53c+44]\n"
+      ],
+      "secrets_exposed": false,
+      "details": {}
+    },
+    {
+      "test_id": "TEST_005",
+      "test_name": "Malformed Input - Special Characters & Encoding",
+      "category": "edge_case",
+      "passed": false,
+      "vulnerabilities_detected": [
+        "Test execution error: Alert Text: DOM_XSS_EXECUTED\nMessage: unexpected alert open: {Alert text : DOM_XSS_EXECUTED}\n  (Session info: chrome=142.0.7444.135)\nStacktrace:\n\tGetHandleVerifier [0x0x7ff6cec7e8e5+80021]\n\tGetHandleVerifier [0x0x7ff6cec7e940+80112]\n\t(No symbol) [0x0x7ff6cea0060f]\n\t(No symbol) [0x0x7ff6ceaaa131]\n\t(No symbol) [0x0x7ff6cea81003]\n\t(No symbol) [0x0x7ff6cea495d1]\n\t(No symbol) [0x0x7ff6cea4a3f3]\n\tGetHandleVerifier [0x0x7ff6cef3dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff6cef37f3a+2936554]\n\tGetHandleVerifier [0x0x7ff6cef58977+3070247]\n\tGetHandleVerifier [0x0x7ff6cec983ce+185214]\n\tGetHandleVerifier [0x0x7ff6cec9fe1f+216527]\n\tGetHandleVerifier [0x0x7ff6cec87b24+117460]\n\tGetHandleVerifier [0x0x7ff6cec87cdf+117903]\n\tGetHandleVerifier [0x0x7ff6cec6dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ff9e079e8d7+23]\n\tRtlUserThreadStart [0x0x7ff9e252c53c+44]\n"
+      ],
+      "xss_successful": false,
+      "details": {}
+    },
+    {
+      "test_id": "TEST_006",
+      "test_name": "Event Handler Injection - onclick",
+      "category": "dom_xss",
+      "passed": false,
+      "vulnerabilities_detected": [
+        "Test execution error: Alert Text: DOM_XSS_EXECUTED\nMessage: unexpected alert open: {Alert text : DOM_XSS_EXECUTED}\n  (Session info: chrome=142.0.7444.135)\nStacktrace:\n\tGetHandleVerifier [0x0x7ff6cec7e8e5+80021]\n\tGetHandleVerifier [0x0x7ff6cec7e940+80112]\n\t(No symbol) [0x0x7ff6cea0060f]\n\t(No symbol) [0x0x7ff6ceaaa131]\n\t(No symbol) [0x0x7ff6cea81003]\n\t(No symbol) [0x0x7ff6cea495d1]\n\t(No symbol) [0x0x7ff6cea4a3f3]\n\tGetHandleVerifier [0x0x7ff6cef3dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff6cef37f3a+2936554]\n\tGetHandleVerifier [0x0x7ff6cef58977+3070247]\n\tGetHandleVerifier [0x0x7ff6cec983ce+185214]\n\tGetHandleVerifier [0x0x7ff6cec9fe1f+216527]\n\tGetHandleVerifier [0x0x7ff6cec87b24+117460]\n\tGetHandleVerifier [0x0x7ff6cec87cdf+117903]\n\tGetHandleVerifier [0x0x7ff6cec6dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ff9e079e8d7+23]\n\tRtlUserThreadStart [0x0x7ff9e252c53c+44]\n"
+      ],
+      "xss_successful": false,
+      "details": {}
+    },
+    {
+      "test_id": "TEST_007",
+      "test_name": "Data Exfiltration - localStorage Leak",
+      "category": "secrets_exposure",
+      "passed": true,
+      "vulnerabilities_detected": [
+        "Test execution error: Alert Text: DOM_XSS_EXECUTED\nMessage: unexpected alert open: {Alert text : DOM_XSS_EXECUTED}\n  (Session info: chrome=142.0.7444.135)\nStacktrace:\n\tGetHandleVerifier [0x0x7ff6cec7e8e5+80021]\n\tGetHandleVerifier [0x0x7ff6cec7e940+80112]\n\t(No symbol) [0x0x7ff6cea0060f]\n\t(No symbol) [0x0x7ff6ceaaa131]\n\t(No symbol) [0x0x7ff6cea81003]\n\t(No symbol) [0x0x7ff6cea495d1]\n\t(No symbol) [0x0x7ff6cea4a3f3]\n\tGetHandleVerifier [0x0x7ff6cef3dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff6cef37f3a+2936554]\n\tGetHandleVerifier [0x0x7ff6cef58977+3070247]\n\tGetHandleVerifier [0x0x7ff6cec983ce+185214]\n\tGetHandleVerifier [0x0x7ff6cec9fe1f+216527]\n\tGetHandleVerifier [0x0x7ff6cec87b24+117460]\n\tGetHandleVerifier [0x0x7ff6cec87cdf+117903]\n\tGetHandleVerifier [0x0x7ff6cec6dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ff9e079e8d7+23]\n\tRtlUserThreadStart [0x0x7ff9e252c53c+44]\n"
+      ],
+      "xss_successful": false,
+      "details": {}
+    },
+    {
+      "test_id": "TEST_008",
+      "test_name": "SVG/XML XSS - onload Payload",
+      "category": "dom_xss",
+      "passed": false,
+      "vulnerabilities_detected": [
+        "Test execution error: Alert Text: DOM_XSS_EXECUTED\nMessage: unexpected alert open: {Alert text : DOM_XSS_EXECUTED}\n  (Session info: chrome=142.0.7444.135)\nStacktrace:\n\tGetHandleVerifier [0x0x7ff6cec7e8e5+80021]\n\tGetHandleVerifier [0x0x7ff6cec7e940+80112]\n\t(No symbol) [0x0x7ff6cea0060f]\n\t(No symbol) [0x0x7ff6ceaaa131]\n\t(No symbol) [0x0x7ff6cea81003]\n\t(No symbol) [0x0x7ff6cea495d1]\n\t(No symbol) [0x0x7ff6cea4a3f3]\n\tGetHandleVerifier [0x0x7ff6cef3dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff6cef37f3a+2936554]\n\tGetHandleVerifier [0x0x7ff6cef58977+3070247]\n\tGetHandleVerifier [0x0x7ff6cec983ce+185214]\n\tGetHandleVerifier [0x0x7ff6cec9fe1f+216527]\n\tGetHandleVerifier [0x0x7ff6cec87b24+117460]\n\tGetHandleVerifier [0x0x7ff6cec87cdf+117903]\n\tGetHandleVerifier [0x0x7ff6cec6dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ff9e079e8d7+23]\n\tRtlUserThreadStart [0x0x7ff9e252c53c+44]\n"
+      ],
+      "xss_successful": false,
+      "details": {}
+    }
+  ],
+  "statistics": {
+    "total_tests": 8,
+    "xss_successful": 1,
+    "secrets_exposed": 0,
+    "dom_xss_success": 1,
+    "edge_cases_vulnerable": 0,
+    "vulnerabilities_found": 1,
+    "attack_success_rate": 12.5,
+    "security_score": 12.5
+  }
+}

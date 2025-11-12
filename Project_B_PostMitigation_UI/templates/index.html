@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self';">
+    <title>Post-Mitigation: Secure UI Application</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        header {
+            background: #27ae60;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+        
+        header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .security-banner {
+            background: #2ecc71;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        main {
+            padding: 30px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background: #f0fdf4;
+            border-left: 4px solid #27ae60;
+            border-radius: 4px;
+        }
+        
+        .section h2 {
+            color: #27ae60;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 14px;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background: #229954;
+        }
+        
+        button:active {
+            transform: scale(0.98);
+        }
+        
+        .comments-section {
+            margin-top: 20px;
+        }
+        
+        .comment {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        
+        .comment-author {
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+        
+        .comment-text {
+            color: #333;
+            line-height: 1.6;
+            word-break: break-word;
+            white-space: pre-wrap;
+        }
+        
+        .comment-time {
+            font-size: 12px;
+            color: #999;
+            margin-top: 8px;
+        }
+        
+        #comments-list {
+            margin-top: 15px;
+        }
+        
+        .error-message {
+            background: #fee;
+            color: #c33;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            display: none;
+        }
+        
+        .success-message {
+            background: #efe;
+            color: #3c3;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            display: none;
+        }
+        
+        .security-note {
+            background: #e8f5e9;
+            border-left: 3px solid #27ae60;
+            padding: 10px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            color: #33691e;
+            border-radius: 2px;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+        }
+        
+        .modal-content {
+            background: white;
+            margin: 10% auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 600px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .modal-close {
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #aaa;
+        }
+        
+        .modal-close:hover {
+            color: #000;
+        }
+        
+        .progress {
+            display: none;
+            text-align: center;
+            margin: 10px 0;
+        }
+        
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔒 Project B: Post-Mitigation Secure UI</h1>
+            <p>Security Hardened Application with XSS Prevention</p>
+        </header>
+        
+        <div class="security-banner">
+            ✅ SECURITY FEATURES ENABLED: CSP, Input Sanitization, Secret Masking, XSS Prevention
+        </div>
+        
+        <main>
+            <!-- Comment Section -->
+            <section class="section">
+                <h2>📝 Comment Box - XSS Protected</h2>
+                
+                <div class="security-note">
+                    🔒 All inputs are sanitized server-side before storage and display. HTML special characters are escaped. XSS attacks are prevented.
+                </div>
+                
+                <p style="margin-bottom: 15px; color: #666;">Try injecting: &lt;script&gt;alert('xss')&lt;/script&gt; - it will be safely escaped</p>
+                
+                <div class="error-message" id="error-message"></div>
+                <div class="success-message" id="success-message"></div>
+                
+                <div class="form-group">
+                    <label for="author-name">Author Name:</label>
+                    <input type="text" id="author-name" placeholder="Your name" maxlength="100">
+                </div>
+                
+                <div class="form-group">
+                    <label for="comment-input">Your Comment:</label>
+                    <textarea id="comment-input" placeholder="Enter your comment here... (PROTECTED)" maxlength="5000"></textarea>
+                </div>
+                
+                <button onclick="postComment()">Post Comment</button>
+                <div class="progress"><div class="loader"></div></div>
+                
+                <!-- Comments Display (SECURE - No innerHTML, uses textContent) -->
+                <div class="comments-section">
+                    <h3 style="margin-top: 20px; color: #333;">Comments:</h3>
+                    <div id="comments-list"></div>
+                </div>
+            </section>
+            
+            <!-- Search Section -->
+            <section class="section">
+                <h2>🔍 Search Box - Reflected XSS Protected</h2>
+                
+                <div class="security-note">
+                    🔒 Search queries are sanitized server-side. Even if you provide HTML/script, it will be rendered as plain text only.
+                </div>
+                
+                <p style="margin-bottom: 15px; color: #666;">Try any payload - no execution possible</p>
+                
+                <div class="form-group">
+                    <label for="search-input">Search:</label>
+                    <input type="text" id="search-input" placeholder="Search for something..." maxlength="500">
+                </div>
+                
+                <button onclick="performSearch()">Search</button>
+                <div id="search-results" style="margin-top: 15px;"></div>
+            </section>
+            
+            <!-- User Input Section -->
+            <section class="section">
+                <h2>👤 User Input Handler - DOM XSS Protected</h2>
+                
+                <div class="security-note">
+                    🔒 All user inputs are sanitized. Safe DOM manipulation is used. No innerHTML with user data.
+                </div>
+                
+                <p style="margin-bottom: 15px; color: #666;">Try: &lt;img src=x onerror="alert('XSS')"&gt; - safely escaped</p>
+                
+                <div class="form-group">
+                    <label for="user-input">Test Input:</label>
+                    <input type="text" id="user-input" placeholder="Enter test input..." maxlength="500">
+                </div>
+                
+                <button onclick="testUserInput()">Process Input</button>
+                <div id="input-result" style="margin-top: 15px; padding: 10px; background: #fff; border: 1px solid #ddd; border-radius: 4px; display: none;">
+                    <strong>Safe Result:</strong><br>
+                    <div id="input-result-text" style="margin-top: 8px; white-space: pre-wrap;"></div>
+                </div>
+            </section>
+            
+            <!-- Modal Test Section -->
+            <section class="section">
+                <h2>🪟 Modal Content - Safe DOM Updates</h2>
+                
+                <div class="security-note">
+                    🔒 Modal content uses textContent instead of innerHTML. Content is sanitized server-side.
+                </div>
+                
+                <p style="margin-bottom: 15px; color: #666;">All content is rendered as text only</p>
+                
+                <div class="form-group">
+                    <label for="modal-input">Modal Content:</label>
+                    <input type="text" id="modal-input" placeholder="Enter modal content..." maxlength="2000">
+                </div>
+                
+                <button onclick="showModal()">Show Modal</button>
+            </section>
+            
+            <!-- Security Features Info -->
+            <section class="section">
+                <h2>🛡️ Security Hardening Applied</h2>
+                
+                <div class="security-note" style="background: #e3f2fd; border-left-color: #1976d2; color: #0d47a1;">
+                    <strong>✅ Content Security Policy (CSP)</strong><br>
+                    Prevents inline scripts and restricts resource loading to same-origin.
+                </div>
+                
+                <div class="security-note" style="background: #e3f2fd; border-left-color: #1976d2; color: #0d47a1;">
+                    <strong>✅ Input Sanitization</strong><br>
+                    All user inputs are validated and sanitized using Bleach library with a whitelist approach.
+                </div>
+                
+                <div class="security-note" style="background: #e3f2fd; border-left-color: #1976d2; color: #0d47a1;">
+                    <strong>✅ Safe DOM Rendering</strong><br>
+                    Using textContent instead of innerHTML. No eval() or dynamic script injection.
+                </div>
+                
+                <div class="security-note" style="background: #e3f2fd; border-left-color: #1976d2; color: #0d47a1;">
+                    <strong>✅ Secrets Protection</strong><br>
+                    No API keys, tokens, or sensitive data exposed. All secrets use environment variables.
+                </div>
+                
+                <div class="security-note" style="background: #e3f2fd; border-left-color: #1976d2; color: #0d47a1;">
+                    <strong>✅ Security Headers</strong><br>
+                    X-Frame-Options: DENY, X-Content-Type-Options: nosniff, X-XSS-Protection: 1; mode=block
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <h2>Modal Content (Safe)</h2>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+    
+    <!-- Secure Frontend JavaScript -->
+    <script>
+        // SECURITY: No sensitive data in frontend code
+        const API_BASE = 'http://127.0.0.1:5001/api';
+        
+        // SECURITY: All DOM manipulations use safe methods (textContent, createElement, etc.)
+        
+        async function postComment() {
+            const author = document.getElementById('author-name').value;
+            const comment = document.getElementById('comment-input').value;
+            
+            if (!comment) {
+                showError('Please enter a comment');
+                return;
+            }
+            
+            if (comment.length > 5000) {
+                showError('Comment is too long');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/comments`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ comment, author: author || 'Anonymous' })
+                });
+                
+                if (response.ok) {
+                    showSuccess('Comment posted successfully!');
+                    document.getElementById('comment-input').value = '';
+                    document.getElementById('author-name').value = '';
+                    loadComments();
+                } else {
+                    const error = await response.json();
+                    showError(error.error || 'Failed to post comment');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showError('Network error occurred');
+            }
+        }
+        
+        async function loadComments() {
+            try {
+                const response = await fetch(`${API_BASE}/comments`);
+                const data = await response.json();
+                
+                const commentsList = document.getElementById('comments-list');
+                commentsList.innerHTML = ''; // Clear
+                
+                if (data.comments && data.comments.length > 0) {
+                    data.comments.forEach(comment => {
+                        const div = document.createElement('div');
+                        div.className = 'comment';
+                        
+                        // SECURITY: Using textContent for user data instead of innerHTML
+                        const authorDiv = document.createElement('div');
+                        authorDiv.className = 'comment-author';
+                        authorDiv.textContent = comment.author;
+                        
+                        const textDiv = document.createElement('div');
+                        textDiv.className = 'comment-text';
+                        textDiv.textContent = comment.text;  // Safe - prevents HTML injection
+                        
+                        const timeDiv = document.createElement('div');
+                        timeDiv.className = 'comment-time';
+                        timeDiv.textContent = new Date(comment.timestamp).toLocaleString();
+                        
+                        div.appendChild(authorDiv);
+                        div.appendChild(textDiv);
+                        div.appendChild(timeDiv);
+                        
+                        commentsList.appendChild(div);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading comments:', error);
+            }
+        }
+        
+        async function performSearch() {
+            const query = document.getElementById('search-input').value;
+            
+            try {
+                const response = await fetch(`${API_BASE}/search?q=${encodeURIComponent(query)}`);
+                const data = await response.json();
+                
+                const resultsDiv = document.getElementById('search-results');
+                resultsDiv.innerHTML = '';  // Clear previous results
+                
+                // SECURITY: Build DOM elements safely instead of using innerHTML
+                const container = document.createElement('div');
+                container.style.padding = '10px';
+                container.style.background = '#f0f0f0';
+                container.style.borderRadius = '4px';
+                
+                const queryLabel = document.createElement('strong');
+                queryLabel.textContent = 'Search query: ';
+                const queryValue = document.createElement('span');
+                queryValue.textContent = data.query;  // Safe - no HTML
+                
+                const resultLabel = document.createElement('strong');
+                resultLabel.textContent = ' | Results: ';
+                const resultValue = document.createElement('span');
+                resultValue.textContent = `${data.results_count} found`;
+                
+                container.appendChild(queryLabel);
+                container.appendChild(queryValue);
+                container.appendChild(resultLabel);
+                container.appendChild(resultValue);
+                
+                resultsDiv.appendChild(container);
+            } catch (error) {
+                console.error('Error searching:', error);
+                showError('Search failed');
+            }
+        }
+        
+        async function testUserInput() {
+            const input = document.getElementById('user-input').value;
+            
+            try {
+                const response = await fetch(`${API_BASE}/test-input`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ input })
+                });
+                
+                const data = await response.json();
+                const resultDiv = document.getElementById('input-result');
+                const resultText = document.getElementById('input-result-text');
+                
+                // SECURITY: Use textContent instead of innerHTML
+                resultText.textContent = data.echoed_in_html;  // Plain text display
+                resultDiv.style.display = 'block';
+            } catch (error) {
+                console.error('Error:', error);
+                showError('Processing failed');
+            }
+        }
+        
+        async function showModal() {
+            const content = document.getElementById('modal-input').value;
+            
+            try {
+                const response = await fetch(`${API_BASE}/modal-content`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ content })
+                });
+                
+                const data = await response.json();
+                const modalBody = document.getElementById('modal-body');
+                
+                // SECURITY: Use textContent for safe display
+                modalBody.innerHTML = '';  // Clear
+                
+                const contentDiv = document.createElement('div');
+                contentDiv.textContent = data.content;  // Safe rendering
+                contentDiv.style.padding = '10px';
+                contentDiv.style.background = '#f9f9f9';
+                contentDiv.style.borderRadius = '4px';
+                
+                modalBody.appendChild(contentDiv);
+                
+                document.getElementById('modal').style.display = 'block';
+            } catch (error) {
+                console.error('Error:', error);
+                showError('Modal creation failed');
+            }
+        }
+        
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+        
+        function showError(message) {
+            const errorDiv = document.getElementById('error-message');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            setTimeout(() => { errorDiv.style.display = 'none'; }, 5000);
+        }
+        
+        function showSuccess(message) {
+            const successDiv = document.getElementById('success-message');
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+            setTimeout(() => { successDiv.style.display = 'none'; }, 3000);
+        }
+        
+        // Load comments on page load
+        window.addEventListener('load', () => {
+            loadComments();
+        });
+        
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
