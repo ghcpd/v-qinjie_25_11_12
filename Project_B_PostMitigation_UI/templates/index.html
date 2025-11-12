@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+  <title>Patched UI - Post Mitigation</title>
+  <meta charset="utf-8">
+</head>
+<body>
+  <h1>Comment Box — Sanitize and Safe Rendering</h1>
+  <form action="/submit" method="post">
+    <label for="comment">Add Comment:</label>
+    <input id="comment" name="comment" value="{{ comment }}" />
+    <button type="submit">Post</button>
+  </form>
+
+  <h2>Reflected Comment (escaped)</h2>
+  <div id="reflected">{{ comment }}</div>
+
+  <h2>DOM Insertion (safe textContent)</h2>
+  <div id="dom-area"></div>
+  <button id="insert-dom">Insert comment into DOM (safe textContent)</button>
+
+  <h2>Debug Panel</h2>
+  <div id="debug-panel">API Key (masked): <span id="api-key">{{ api_key }}</span></div>
+
+  <script src="/static/js/main.js"></script>
+</body>
+</html>

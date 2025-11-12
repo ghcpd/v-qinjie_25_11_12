@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+  <title>Vulnerable UI - Pre Mitigation</title>
+  <meta charset="utf-8">
+</head>
+<body>
+  <h1>Vulnerable Comment Box</h1>
+  <form action="/submit" method="post">
+    <label for="comment">Add Comment:</label>
+    <input id="comment" name="comment" value="{{ comment }}" />
+    <button type="submit">Post</button>
+  </form>
+
+  <h2>Reflected Comment</h2>
+  <!-- UNSAFE: Using |safe to reflect user input without escaping -->
+  <div id="reflected">{{ comment | safe }}</div>
+
+  <h2>DOM Insertion (vulnerable)</h2>
+  <div id="dom-area"></div>
+  <button id="insert-dom">Insert comment into DOM (unsafe innerHTML)</button>
+
+  <h2>Debug Panel (exposes secrets)</h2>
+  <div id="debug-panel">API Key: <span id="api-key">{{ api_key }}</span></div>
+  <button id="log-secret">Console.log secret</button>
+
+  <script src="/static/js/main.js"></script>
+</body>
+</html>
