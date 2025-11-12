@@ -1,0 +1,89 @@
+{
+  "test_cases": [
+    {
+      "test_id": "TC001",
+      "name": "Normal Input",
+      "input_payload": "Hello, this is a safe comment!",
+      "environment": {
+        "browser_type": "chromium",
+        "viewport": {"width": 1920, "height": 1080},
+        "js_enabled": true
+      },
+      "expected_behavior": "Input renders correctly as plain text without any script execution",
+      "pass_criteria": "No alerts triggered, no script tags in DOM, text displayed as-is"
+    },
+    {
+      "test_id": "TC002",
+      "name": "Reflected XSS - Script Tag",
+      "input_payload": "<script>alert('XSS')</script>",
+      "environment": {
+        "browser_type": "chromium",
+        "viewport": {"width": 1920, "height": 1080},
+        "js_enabled": true
+      },
+      "expected_behavior": "Script should be sanitized and not execute",
+      "pass_criteria": "No alert dialog, script tag escaped or removed from DOM"
+    },
+    {
+      "test_id": "TC003",
+      "name": "DOM XSS - innerHTML Injection",
+      "input_payload": "<img src=x onerror=alert('DOM XSS')>",
+      "environment": {
+        "browser_type": "chromium",
+        "viewport": {"width": 1920, "height": 1080},
+        "js_enabled": true
+      },
+      "expected_behavior": "Image tag should be sanitized, onerror handler should not execute",
+      "pass_criteria": "No alert triggered, no onerror execution, safe rendering"
+    },
+    {
+      "test_id": "TC004",
+      "name": "Secrets Exposure - API Key Detection",
+      "input_payload": "normal_user_input",
+      "environment": {
+        "browser_type": "chromium",
+        "viewport": {"width": 1920, "height": 1080},
+        "js_enabled": true
+      },
+      "expected_behavior": "No API keys or secrets visible in DOM, console, or localStorage",
+      "pass_criteria": "No API keys found in page source, console logs, or localStorage"
+    },
+    {
+      "test_id": "TC005",
+      "name": "Malformed Input - Encoded Script",
+      "input_payload": "javascript:alert(String.fromCharCode(88,83,83))",
+      "environment": {
+        "browser_type": "chromium",
+        "viewport": {"width": 1920, "height": 1080},
+        "js_enabled": true
+      },
+      "expected_behavior": "Encoded script should be treated as plain text",
+      "pass_criteria": "No script execution, payload treated as text"
+    },
+    {
+      "test_id": "TC006",
+      "name": "Edge Case - Long String",
+      "input_payload": "ABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+      "environment": {
+        "browser_type": "chromium",
+        "viewport": {"width": 1920, "height": 1080},
+        "js_enabled": true
+      },
+      "expected_behavior": "Long input should be handled gracefully without performance issues",
+      "pass_criteria": "Page renders without errors, reasonable response time"
+    },
+    {
+      "test_id": "TC007",
+      "name": "Edge Case - Special Characters",
+      "input_payload": "<>&\"'`;{}[]()=+*%$#@!",
+      "environment": {
+        "browser_type": "chromium",
+        "viewport": {"width": 1920, "height": 1080},
+        "js_enabled": true
+      },
+      "expected_behavior": "Special characters should be properly escaped",
+      "pass_criteria": "No script execution, characters properly escaped in DOM"
+    }
+  ]
+}
+
