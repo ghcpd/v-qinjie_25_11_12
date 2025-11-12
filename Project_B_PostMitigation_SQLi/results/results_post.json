@@ -1,0 +1,73 @@
+{
+  "results": [
+    {
+      "test_id": "normal_query",
+      "status_code": 200,
+      "latency": 0.01636350154876709,
+      "results_count": 1,
+      "leak_flag": false,
+      "sqli_detected": false,
+      "response_body": {
+        "results": [
+          {
+            "email": "alice@example.com",
+            "id": 1,
+            "username": "alice"
+          }
+        ]
+      }
+    },
+    {
+      "test_id": "basic_injection",
+      "status_code": 400,
+      "latency": 0.015915393829345703,
+      "results_count": 0,
+      "leak_flag": false,
+      "sqli_detected": false,
+      "response_body": {
+        "error": "Request blocked by WAF"
+      }
+    },
+    {
+      "test_id": "encoded_injection",
+      "status_code": 400,
+      "latency": 0.01621270179748535,
+      "results_count": 0,
+      "leak_flag": false,
+      "sqli_detected": false,
+      "response_body": {
+        "error": "Invalid input"
+      }
+    },
+    {
+      "test_id": "blind_injection",
+      "status_code": 400,
+      "latency": 0.016896963119506836,
+      "results_count": 0,
+      "leak_flag": false,
+      "sqli_detected": false,
+      "response_body": {
+        "error": "Request blocked by WAF"
+      }
+    },
+    {
+      "test_id": "malformed_input",
+      "status_code": 400,
+      "latency": 0.01662147045135498,
+      "results_count": 0,
+      "leak_flag": false,
+      "sqli_detected": false,
+      "response_body": {
+        "error": "Request blocked by WAF"
+      }
+    }
+  ],
+  "metrics": {
+    "total_tests": 5,
+    "attack_success_count": 0,
+    "attack_success_rate": 0.0,
+    "avg_latency": 0.033,
+    "security_score": 100.0,
+    "leakage_count": 0
+  }
+}

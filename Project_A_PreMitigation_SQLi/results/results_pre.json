@@ -1,0 +1,174 @@
+{
+  "results": [
+    {
+      "test_id": "normal_query",
+      "status_code": 200,
+      "latency": 0.014864325523376465,
+      "results_count": 1,
+      "leak_flag": false,
+      "sqli_detected": false,
+      "response_body": {
+        "results": [
+          {
+            "email": "alice@example.com",
+            "id": 1,
+            "username": "alice"
+          }
+        ]
+      }
+    },
+    {
+      "test_id": "basic_injection",
+      "status_code": 200,
+      "latency": 0.020417094230651855,
+      "results_count": 20,
+      "leak_flag": false,
+      "sqli_detected": true,
+      "response_body": {
+        "results": [
+          {
+            "email": "alice@example.com",
+            "id": 1,
+            "username": "alice"
+          },
+          {
+            "email": "bob@example.com",
+            "id": 2,
+            "username": "bob"
+          },
+          {
+            "email": "charlie@example.com",
+            "id": 3,
+            "username": "charlie"
+          },
+          {
+            "email": "admin@example.com",
+            "id": 4,
+            "username": "admin"
+          },
+          {
+            "email": "user4@example.com",
+            "id": 5,
+            "username": "user4"
+          },
+          {
+            "email": "user5@example.com",
+            "id": 6,
+            "username": "user5"
+          },
+          {
+            "email": "user6@example.com",
+            "id": 7,
+            "username": "user6"
+          },
+          {
+            "email": "user7@example.com",
+            "id": 8,
+            "username": "user7"
+          },
+          {
+            "email": "user8@example.com",
+            "id": 9,
+            "username": "user8"
+          },
+          {
+            "email": "user9@example.com",
+            "id": 10,
+            "username": "user9"
+          },
+          {
+            "email": "user10@example.com",
+            "id": 11,
+            "username": "user10"
+          },
+          {
+            "email": "user11@example.com",
+            "id": 12,
+            "username": "user11"
+          },
+          {
+            "email": "user12@example.com",
+            "id": 13,
+            "username": "user12"
+          },
+          {
+            "email": "user13@example.com",
+            "id": 14,
+            "username": "user13"
+          },
+          {
+            "email": "user14@example.com",
+            "id": 15,
+            "username": "user14"
+          },
+          {
+            "email": "user15@example.com",
+            "id": 16,
+            "username": "user15"
+          },
+          {
+            "email": "user16@example.com",
+            "id": 17,
+            "username": "user16"
+          },
+          {
+            "email": "user17@example.com",
+            "id": 18,
+            "username": "user17"
+          },
+          {
+            "email": "user18@example.com",
+            "id": 19,
+            "username": "user18"
+          },
+          {
+            "email": "user19@example.com",
+            "id": 20,
+            "username": "user19"
+          }
+        ]
+      }
+    },
+    {
+      "test_id": "encoded_injection",
+      "status_code": 200,
+      "latency": 0.017702698707580566,
+      "results_count": 0,
+      "leak_flag": false,
+      "sqli_detected": false,
+      "response_body": {
+        "results": []
+      }
+    },
+    {
+      "test_id": "blind_injection",
+      "status_code": 200,
+      "latency": 4.010829210281372,
+      "results_count": 0,
+      "leak_flag": false,
+      "sqli_detected": true,
+      "response_body": {
+        "results": []
+      }
+    },
+    {
+      "test_id": "malformed_input",
+      "status_code": 500,
+      "latency": 0.011203169822692871,
+      "results_count": 0,
+      "leak_flag": false,
+      "sqli_detected": false,
+      "response_body": {
+        "error": "the query contains a null character"
+      }
+    }
+  ],
+  "metrics": {
+    "total_tests": 5,
+    "attack_success_count": 2,
+    "attack_success_rate": 40.0,
+    "avg_latency": 1.63,
+    "security_score": 60.0,
+    "leakage_count": 0
+  }
+}

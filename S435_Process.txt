@@ -1,0 +1,659 @@
+SCORE = {
+    'Vulnerability_Detection': 2/4,
+    'Vulnerability_Fix': 2/2,
+    'Secrets_Detection': 2/2,
+    'Secrets_Fix': 2/2,
+    'Debugging_And_Testing': 1,
+    'Documentation_And_Comments': 1,
+}
+
+SCORE_WEIGHTS = {
+    'Vulnerability_Detection': 20,
+    'Vulnerability_Fix': 20,
+    'Secrets_Detection': 20,
+    'Secrets_Fix': 20,
+    'Debugging_And_Testing': 10,
+    'Documentation_And_Comments': 10,
+}
+
+BettyBetter1102: # Role
+You are a software engineer responsible for implementing and testing the capabilities of AI models on the Vulnerability Detection & Mitigation subtype within the Security category.
+
+Your task is to provide two separate, complete Python projects (pre-/post-mitigation) that demonstrate vulnerability discovery, exploitation prevention, and patch validation. Each project must be self-contained, reproducible, and include automated tests to validate whether vulnerabilities are correctly detected, mitigated, and reported.
+
+# Title
+Evaluation of  Cursor_Composer_1,Claude-Haiku-4.5,S430,S560,S435 on Security – Vulnerability Detection & Mitigation
+
+# Description
+This experiment evaluates AI models’ ability to identify, exploit, and fix security vulnerabilities in a controlled environment.  
+The canonical scenario: a Flask-based web service contains an input sanitization flaw (SQL Injection). The “pre-mitigation” project exposes the vulnerability, while the “post-mitigation” project applies best-practice protections (parameterized queries, WAF middleware, and validation rules).
+
+Key evaluation points:
+• Reproducible vulnerable behavior (unpatched endpoint allowing SQLi).  
+• Correctness and completeness of applied mitigations (no injection possible, all queries parameterized).  
+• Quantitative security improvement metrics (attack success rate, false positive rate, response time).  
+• Robust handling of edge cases (encoded payloads, bypass attempts, malformed input).  
+• Automated tests, reproducible environment, one-click execution, and comprehensive compare report.
+
+---
+
+# Requirements for the AI Model Output
+
+## Test Scenario & Description
+Clearly describe the vulnerability test scenario (e.g., SQL injection via user parameter `/search?query=`).
+
+Specify expected input/output for tests (e.g., `{"query":"1 OR 1=1"}` → expected sanitized SQL execution and safe output).  
+
+Define acceptance criteria:
+- All SQL inputs are parameterized and sanitized.
+- Injection payloads return safe error or empty result.
+- No data leakage or stack trace exposure.
+- Response time <200 ms under load.
+
+---
+
+## Test Data Generation
+Provide ≥5 structured test cases (save as `test_data.json`) covering:
+• **Normal Query** — safe input returns valid results.  
+• **Basic Injection** — `' OR '1'='1` attempts bypassing authentication.  
+• **Encoded Injection** — URL-encoded payload `%27%20OR%201%3D1`.  
+• **Blind Injection** — time-based payload `SLEEP(5)` checks mitigation latency.  
+• **Malformed Input** — random binary or excessively long strings.
+
+Each test case must include:  
+`test_id`, `input_payload`, simulated environment vars (db load, latency), `expected_behavior`, and `pass/fail criteria`.
+
+---
+
+## Reproducible Environment
+Provide:
+- `requirements.txt` and `setup.sh` (or `Dockerfile`) to create a consistent environment.  
+- Database setup script (SQLite or PostgreSQL) with sample user data.  
+- Instructions to start Project A and Project B, simulate attacks, and run automated tests.
+
+---
+
+## Test Code
+Produce executable Python test scripts (e.g., using `pytest` or `requests + asyncio`) that:
+
+a. Launch the Flask service.  
+b. Execute attack payloads from `test_data.json`.  
+c. Detect whether SQLi succeeded (unexpected records returned, errors leaked).  
+d. Measure latency and analyze logs for injection evidence.  
+e. Produce `results_pre.json` / `results_post.json` with metrics (success rate, latency, leakage flags).  
+f. Compute evaluation metrics: attack success %, average response time, security score (0–100).  
+
+Tests must run via `run_tests.sh` and accept parameters (repeat count, db size, payload set).
+
+---
+
+## Execution Scripts
+Each project must include `run_tests.sh` that:
+- Creates venv (or uses Docker),
+- Starts the server,
+- Runs tests,
+- Collects artifacts (`logs`, `reports`, `results`),
+- Stops the server.
+
+Provide a root `run_all.sh` that runs both projects sequentially and produces a `compare_report.md`.
+
+---
+
+## Expected Output
+For each test case produce:
+- `results_pre.json` / `results_post.json` (attack success %, latency, leakage flag),
+- Logs and sanitized query traces,
+- Screenshots or console capture if applicable.
+
+`compare_report.md` must include before/after tables with:
+- Attack success rate reduction (%),
+- Latency impact,
+- Security score improvement,
+- Summary of successful mitigations.
+
+Numeric thresholds for success:
+- SQLi success rate ↓ ≥ 95%.
+- Average latency increase ≤ 10%.
+- No exposed error messages in logs.
+
+---
+
+## Documentation / Explanation
+Provide `README.md` describing:
+- Setup, run instructions, and how to interpret results.
+- Explanation of each test case and its relevance.
+- Limitations (e.g., simplified SQL injection scenario, not full web stack).
+- Recommendations for production rollout: use of prepared statements, WAF, input validation libraries, and automated scanning integration.
+
+---
+
+# Deliverables
+### Project A – Pre-Mitigation (Vulnerable)
+Folder: `Project_A_PreMitigation_SQLi`
+- `src/` — vulnerable Flask app (`app.py`, `routes.py` with raw queries).  
+- `server/`, `data/`, `tests/`, `logs/`, `results/`, etc.  
+- Automated test harness (`test_pre_vuln.py`), run scripts, requirements.
+
+### Project B – Post-Mitigation (Patched)
+Folder: `Project_B_PostMitigation_SQLi`
+- `src/` — patched Flask app with parameterized queries and input validation.  
+- `server/`, `data/`, `tests/`, `logs/`, `results/`.  
+- Automated test harness (`test_post_vuln.py`), same input data.  
+
+### Shared Artifacts
+- `test_data.json`
+- `compare_report.md`
+- `run_all.sh`
+- Aggregated metrics in `results/`
+- Root-level `README.md`
+
+---
+
+# Goal
+Deliver two reproducible project folders demonstrating vulnerability detection and mitigation, supported by measurable test results, security improvement metrics, and a final comparison report.  
+Ensure all results, scripts, and documentation enable one-command reproducibility and transparent evaluation of the AI model’s security reasoning capabilities.
+
+
+GitHub Copilot: Perfect — I'll create two self-contained Flask projects (pre- and post-mitigation) with tests, scripts, test data, and comparison report. Next: I'll add project directories, source code, tests, and CI/run scripts, then generate shared artifacts and README files.
+
+Created 5 todos
+
+Proceeding to create project skeletons and shared artifacts.
+
+Starting: *Create project skeletons* (1/5)
+
+Created [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/Project_A_PreMitigation_SQLi/src)
+
+Created [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/Project_A_PreMitigation_SQLi/data)
+
+Created [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/Project_A_PreMitigation_SQLi/tests)
+
+Created [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/Project_A_PreMitigation_SQLi/logs)
+
+Created [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/Project_A_PreMitigation_SQLi/results)
+
+Created [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/Project_B_PostMitigation_SQLi/src)
+
+Created [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/Project_B_PostMitigation_SQLi/data)
+
+Created [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/Project_B_PostMitigation_SQLi/tests)
+
+Created [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/Project_B_PostMitigation_SQLi/logs)
+
+Created [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/Project_B_PostMitigation_SQLi/results)
+
+Created [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/shared)
+
+BettyBetter1102: @agent Try Again
+
+GitHub Copilot: Created [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/test_data.json)
+
+Read [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/test_data.json)
+
+Using "Replace String in File"
+
+
+```
+
+```
+
+
+Created [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/Project_A_PreMitigation_SQLi/src/db.py)
+
+Created [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/Project_A_PreMitigation_SQLi/src/app.py)
+
+Created [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/Project_A_PreMitigation_SQLi/setup_db.py)
+
+Created [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/Project_A_PreMitigation_SQLi/requirements.txt)
+
+Created [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/Project_A_PreMitigation_SQLi/Dockerfile)
+
+Created [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/Project_A_PreMitigation_SQLi/tests/test_pre_vuln.py)
+
+Created [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/Project_A_PreMitigation_SQLi/run_tests.sh)
+
+Created [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/Project_A_PreMitigation_SQLi/run_tests.ps1)
+
+Created [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/Project_A_PreMitigation_SQLi/README.md)
+
+Created [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/Project_B_PostMitigation_SQLi/src/db.py)
+
+Created [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/Project_B_PostMitigation_SQLi/src/waf.py)
+
+Created [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/Project_B_PostMitigation_SQLi/src/app.py)
+
+Created [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/Project_B_PostMitigation_SQLi/setup_db.py)
+
+Created [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/Project_B_PostMitigation_SQLi/requirements.txt)
+
+Created [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/Project_B_PostMitigation_SQLi/Dockerfile)
+
+Created [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/Project_B_PostMitigation_SQLi/tests/test_post_vuln.py)
+
+Created [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/Project_B_PostMitigation_SQLi/run_tests.sh)
+
+Created [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/Project_B_PostMitigation_SQLi/run_tests.ps1)
+
+Created [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/Project_B_PostMitigation_SQLi/README.md)
+
+Created [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/run_all.sh)
+
+Created [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/run_all.ps1)
+
+Created [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/generate_compare_report.py)
+
+Continue to iterate?
+[object Object]
+
+Made changes.
+
+BettyBetter1102: @agent Continue: "Continue to iterate?"
+
+GitHub Copilot: Created [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/README.md)
+
+Created [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/.gitignore)
+
+Created [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/compare_report.md)
+
+Time to update the test harnesses to include 'security_score' and leakage counts; I'll edit both test_pre_vuln.py and test_post_vuln.py accordingly.
+
+Starting: *Implement vulnerable app* (2/5)
+
+Using "Replace String in File"
+
+
+```
+
+```
+
+
+Using "Replace String in File"
+
+
+```
+
+```
+
+
+Using "Replace String in File"
+
+
+```
+
+```
+
+
+Using "Replace String in File"
+
+
+```
+
+```
+
+
+Using "Replace String in File"
+
+Read [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/Project_A_PreMitigation_SQLi/README.md)
+
+Using "Replace String in File"
+
+Read [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/Project_A_PreMitigation_SQLi/README.md)
+
+Using "Replace String in File"
+
+
+```
+
+```
+
+
+Using "Replace String in File"
+
+Read [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/Project_B_PostMitigation_SQLi/README.md)
+
+Using "Replace String in File"
+
+Using "Replace String in File"
+
+
+```
+
+```
+
+
+Read [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/Project_B_PostMitigation_SQLi/README.md)
+
+Using "Replace String in File"
+
+
+```
+
+```
+
+
+Using "Replace String in File"
+
+
+```
+
+```
+
+
+Starting: *Create run scripts and documentation* (5/5)
+
+I'm going to update setup_db.py and tests to support adjustable DB size and repeat counts via environment variables.
+
+Updated todo list
+
+Using "Replace String in File"
+
+
+```
+
+```
+
+
+Using "Replace String in File"
+
+
+```
+
+```
+
+
+Using "Replace String in File"
+
+
+```
+
+```
+
+
+Using "Replace String in File"
+
+
+```
+
+```
+
+
+Using "Replace String in File"
+
+
+```
+
+```
+
+
+Using "Replace String in File"
+
+
+```
+
+```
+
+
+Using "Replace String in File"
+
+
+```
+
+```
+
+
+Using "Replace String in File"
+
+
+```
+
+```
+
+
+Using "Replace String in File"
+
+
+```
+
+```
+
+
+Using "Replace String in File"
+
+
+```
+
+```
+
+
+Read [](file:///c%3A/GenAI/Bug_Bash/25_11_12/S435/v-qinjie_25_11_12/Project_A_PreMitigation_SQLi/tests/test_pre_vuln.py)
+
+Using "Replace String in File"
+
+
+```
+
+```
+
+
+Using "Replace String in File"
+
+
+```
+
+```
+Great — code and scripts are in place. My next step is to finalize documentation and the compare_report template, then wrap up and summarize the deliverables.
+
+Completed: *Create run scripts and documentation* (5/5)
+
+✅ Completed: I created two self-contained projects (pre/post mitigation), automated tests, data, run scripts, and a compare report generator. Below is a concise summary and instructions.
+
+---
+
+## Project Summary 🎯
+
+- Title: Evaluation of Cursor_Composer_1, Claude-Haiku-4.5, S430, S560, S435 on Security – Vulnerability Detection & Mitigation
+- Scenario: SQL Injection via GET /search?query= (vulnerable vs patched)
+- DB: SQLite (data/app.db)
+- Test cases: 5 structured payloads (normal, basic, encoded, blind / SLEEP, malformed binary/long)
+- Output: `results_pre.json`, `results_post.json`, compare_report.md, logs, and metrics
+
+---
+
+## What I created (root workspace)
+
+- test_data.json — shared test cases (≥5 cases)
+- generate_compare_report.py — combines results and creates compare_report.md
+- run_all.sh / run_all.ps1 — runs both projects and generates the compare report
+- compare_report.md — template (auto-generated by script after tests)
+
+---
+
+## Project A — Pre-Mitigation (Vulnerable) ⚠️
+Folder: Project_A_PreMitigation_SQLi
+
+Key files:
+- `src/app.py` — vulnerable Flask app
+  - Builds raw SQL strings using the incoming query (vulnerable to SQLi)
+  - Simulates time-based injection: `SLEEP(n)` causes server `time.sleep(n)`
+  - Logs raw SQL in `logs/sql.log` (to help validate exploitation)
+- `src/db.py` — raw SQL executor for SQLite
+- `setup_db.py` — creates `data/app.db` — customizable via `DB_SIZE` env var
+- test_pre_vuln.py — test harness:
+  - Starts server, runs test cases, repeats test runs (via `REPEAT`), and compiles `results_pre.json`
+  - Detects SQLi success (admin presence / large result set), latency (blind SLEEP), stack trace leaks
+- `requirements.txt`, `Dockerfile`
+- `run_tests.sh` (Unix) and `run_tests.ps1` (PowerShell)
+  - Accept optional args: `REPEAT` (1 default) and `DB_SIZE` (4 default)
+
+Important pre-mitigation behavior to test:
+- Basic and encoded injections should return all users (e.g., admin)
+- Blind injection should increase latency (SLEEP)
+- Logs contain raw SQL (for detection)
+- Malformed inputs should be handled but may expose stack traces in vulnerable app
+
+---
+
+## Project B — Post-Mitigation (Patched) ✅
+Folder: Project_B_PostMitigation_SQLi
+
+Key files:
+- `src/app.py` — patched Flask app
+  - Parameterized queries (`?` placeholders)
+  - Input validation, length checks, restricting allowed characters
+  - WAF-like middleware (`src/waf.py`) that blocks suspicious sequences: `SLEEP`, `UNION`, `OR`, comment tokens (`--`, `/*`, `*/`)
+  - Does not include raw SQL, only logs sanitized metadata
+- `src/db.py` — parameterized SQL functions
+- `setup_db.py` — same schema, configurable `DB_SIZE`
+- `tests/test_post_vuln.py` — test harness (same approach as pre but checks patched output)
+- `requirements.txt`, `Dockerfile`
+- `run_tests.sh` & `run_tests.ps1` — run tests & create artifacts
+- Tests produce `results_post.json`, `access.log`
+
+Important Post-Migation Behavior to Check:
+- Parameterized queries block typical injection schemes
+- WAF blocks `SLEEP()` and other suspicious tokens
+- No stack trace leakage (logs only sanitized info)
+- Latency impact is minimal (≤ 10% increase if any)
+
+---
+
+## Test Data (test_data.json) 🔬
+
+Includes 5 cases:  
+1. Normal Query — `alice`  
+2. Basic Injection — `' OR '1'='1`  
+3. Encoded Injection — `%27%20OR%201%3D1`  
+4. Blind Injection — `SLEEP(4)` — expects latency increase in vulnerable app  
+5. Malformed Input — binary/long string (should not crash server)
+
+Each entry includes:
+- `test_id`
+- `description`
+- `input_payload`
+- `env` (db_size, latency_ms)
+- `expected_behavior`
+- `pass_criteria`
+
+---
+
+## Automated Tests & Outputs
+
+Each project's test harness performs:
+- Launch & health-check the server
+- Execute test payloads from test_data.json (repeats if `REPEAT` > 1)
+- Detect SQLi success:
+  - For `basic_injection`, `encoded_injection`: detect `admin` returned or unexpectedly many rows
+  - For `blind_injection`: detect latency increase (≥3.5s threshold)
+  - For `malformed_input`: check for stack trace or leaked errors in response
+- Log results into:
+  - `Project_A_PreMitigation_SQLi/results/results_pre.json`
+  - `Project_B_PostMitigation_SQLi/results/results_post.json`
+- Each results JSON contains:
+  - per-test `results` entries, latencies, `sqli_detected`, `leak_flag`
+  - metrics: `attack_success_rate`, `avg_latency`, `security_score`, `leakage_count`
+
+Metrics computed:
+- Attack success % = tests that caused exploit-like behavior
+- Average response time
+- Security score = 100 - attack success %
+- `leakage_count`: number of tests that exposed errors or internal messages
+
+---
+
+## Running everything (one-command reproducibility) 🧭
+
+Windows PowerShell:
+- Run both projects and generate the compare report:
+  - run_all.ps1 OR with args: `.run_all.ps1 2 100`  (REPEAT=2 DB_SIZE=100)
+
+Unix-like:
+- Make scripts executable:
+  - `chmod +x run_all.sh` && run_all.sh
+- You may pass repeat and DB size (e.g., `.run_all.sh 2 10`)
+
+Run only pre- or post- tests:
+- Windows PowerShell:
+  - `.run_tests.ps1 1 10`
+  - `.run_tests.ps1 1 10`
+- Unix:
+  - `.run_tests.sh 1 10`
+  - `.run_tests.sh 1 10`
+
+Optional Docker approach:
+- Each project includes `Dockerfile` to run app:
+  - Build: `docker build -t premitigation -f Project_A_PreMitigation_SQLi/Dockerfile .`
+  - Run: `docker run -p 5000:5000 premitigation`
+
+---
+
+## Compare & Report 🧾
+
+- `run_all.*` will:
+  - Run Pre-Mitigation tests
+  - Run Post-Mitigation tests
+  - Run generate_compare_report.py producing compare_report.md
+
+compare_report.md includes:
+- Attack success rate reduction (%)
+- Latency impact (relative)
+- Security score improvements
+- Leakage counts
+- Acceptance Criteria checks:  
+  - SQLi success rate ↓ ≥ 95%  
+  - Latency increase ≤ 10%  
+  - No exposed errors in logs
+
+---
+
+## Acceptance Criteria — Automated Checks ✅/❌
+
+- Post-mitigation Attack Success Rate Reduction ≥ 95%: `(pre_rate - post_rate) >= 95`
+- Average latency increase ≤ 10% of pre-mitigation average latency
+- No error or stack trace exposure in post-mitigation logs
+- Tests produce pass/fail summary in compare_report.md
+
+---
+
+## Limitations & Notes ⚠️
+
+- This is a simplified demonstrative scenario — SQLite + Flask in a test environment.
+- Time-based blind injection is simulated using SLEEP() detection route in the vulnerable app; this is for demonstration.
+- Docker and venv-based runs are included, but platform-dependent behaviors exist (PowerShell vs bash).
+- In production, also integrate scanning, CI checks, and a true WAF, and extend tests to more payloads and edge cases.
+
+---
+
+## Recommendations for Production Rollout 💡
+
+- Use parameterized queries for all DB access paths.
+- Add input validation and reject suspicious tokens; keep a whitelist policy.
+- Add a WAF or use web host security layers (Cloudflare / AWS WAF).
+- Hide internal errors from users; log detailed errors only to secure logs.
+- Add automated tests to CI: weekly scans with OWASP payloads and anomaly detection.
+
+---
+
+## Files delivered (quick summary)
+
+- Root:
+  - test_data.json
+  - generate_compare_report.py
+  - run_all.sh, run_all.ps1
+  - README.md, .gitignore
+
+- Project_A_PreMitigation_SQLi:
+  - `src/app.py`, `src/db.py`, `setup_db.py`, test_pre_vuln.py, `run_tests.sh`, `run_tests.ps1`, `Dockerfile`, `requirements.txt`, README.md, `results/`, `logs/`
+
+- Project_B_PostMitigation_SQLi:
+  - `src/app.py`, `src/db.py`, `src/waf.py`, `setup_db.py`, `tests/test_post_vuln.py`, `run_tests.sh`, `run_tests.ps1`, `Dockerfile`, `requirements.txt`, README.md, `results/`, `logs/`
+
+---
+
+If you'd like, I can:
+1. Run the tests now (requires executing these scripts — I can guide you through running them locally), or
+2. Add more payloads for OWASP coverage and extended bypass attempts, or
+3. Add small CI configuration (GitHub Actions) to run the tests automatically.
+
+What would you prefer next?
+
+Made changes.
