@@ -1,0 +1,37 @@
+[
+  {
+    "test_id": "normal_query",
+    "input_payload": {"endpoint": "/search", "params": {"query": "alice"}},
+    "env": {"db_size": 3, "latency_ms": 0},
+    "expected_behavior": {"inject_expectation": "no_injection", "description": "Normal safe input returns expected results for alice"},
+    "pass_criteria": "returns alice and no errors"
+  },
+  {
+    "test_id": "basic_injection",
+    "input_payload": {"endpoint": "/search", "params": {"query": "' OR '1'='1"}},
+    "env": {"db_size": 3, "latency_ms": 0},
+    "expected_behavior": {"inject_expectation": "stored_data_leak", "description": "Basic SQL Injection intended to return multiple rows"},
+    "pass_criteria": "In pre-mitigation, injection success (multiple rows). Post-mitigation, no data leak"
+  },
+  {
+    "test_id": "encoded_injection",
+    "input_payload": {"endpoint": "/auth", "params": {"user": "%27%20OR%201%3D1", "pwd": "whatever"}},
+    "env": {"db_size": 3, "latency_ms": 0},
+    "expected_behavior": {"inject_expectation": "auth_bypass", "description": "Encoded payload trying to bypass auth via injection"},
+    "pass_criteria": "Pre: bypass, Post: blocked"
+  },
+  {
+    "test_id": "timed_blind_injection",
+    "input_payload": {"endpoint": "/sleep", "params": {"q": "admin' OR SLEEP(5)--"}},
+    "env": {"db_size": 3, "latency_ms": 5000},
+    "expected_behavior": {"inject_expectation": "timedelay", "description": "Time-based reference — should cause latency in vulnerable app" , "threshold_ms": 2000},
+    "pass_criteria": "Pre: latency > threshold, Post: no latency or blocked"
+  },
+  {
+    "test_id": "malformed_input",
+    "input_payload": {"endpoint": "/search", "params": {"query": "\u0000\u0001\u0002AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"}},
+    "env": {"db_size": 3, "latency_ms": 0},
+    "expected_behavior": {"inject_expectation": "no_injection", "description": "Malformed or overly long input should be sanitized or rejected"},
+    "pass_criteria": "No crash, no stack trace, no leakage"
+  }
+]

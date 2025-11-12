@@ -1,0 +1,109 @@
+[
+  {
+    "test_id": "normal_query",
+    "input_payload": {
+      "params": {
+        "query": "alice"
+      }
+    },
+    "attack_succeeded": false,
+    "latency_ms": 6.976604461669922,
+    "resp": {
+      "results": [
+        {
+          "id": 7,
+          "username": "alice"
+        }
+      ]
+    },
+    "evidence": [
+      "RAW_SQL_logged",
+      "RAW_AUTH_SQL_logged"
+    ]
+  },
+  {
+    "test_id": "basic_injection",
+    "input_payload": {
+      "params": {
+        "query": "' OR '1'='1"
+      }
+    },
+    "attack_succeeded": true,
+    "latency_ms": 28.37657928466797,
+    "resp": {
+      "results": [
+        {
+          "id": 7,
+          "username": "alice"
+        },
+        {
+          "id": 8,
+          "username": "bob"
+        },
+        {
+          "id": 9,
+          "username": "admin"
+        }
+      ]
+    },
+    "evidence": [
+      "RAW_SQL_logged",
+      "RAW_AUTH_SQL_logged",
+      "multiple_rows_returned"
+    ]
+  },
+  {
+    "test_id": "encoded_injection",
+    "input_payload": {
+      "params": {
+        "user": "%27%20OR%201%3D1",
+        "pwd": "whatever"
+      }
+    },
+    "attack_succeeded": false,
+    "latency_ms": 29.427528381347656,
+    "resp": {
+      "auth": "failed"
+    },
+    "evidence": [
+      "RAW_SQL_logged",
+      "RAW_AUTH_SQL_logged"
+    ]
+  },
+  {
+    "test_id": "timed_blind_injection",
+    "input_payload": {
+      "params": {
+        "q": "admin' OR SLEEP(5)--"
+      }
+    },
+    "attack_succeeded": true,
+    "latency_ms": 5004.142284393311,
+    "resp": {
+      "error": "internal error"
+    },
+    "evidence": [
+      "RAW_SQL_logged",
+      "RAW_AUTH_SQL_logged",
+      "timedelay_detected"
+    ]
+  },
+  {
+    "test_id": "malformed_input",
+    "input_payload": {
+      "params": {
+        "query": "\u0000\u0001\u0002AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+      }
+    },
+    "attack_succeeded": true,
+    "latency_ms": 14.551877975463867,
+    "resp": {
+      "error": "internal error"
+    },
+    "evidence": [
+      "RAW_SQL_logged",
+      "RAW_AUTH_SQL_logged",
+      "error_leaked"
+    ]
+  }
+]
