@@ -1,0 +1,99 @@
+2025-11-12 18:19:42,856 - __main__ - INFO - Initializing test harness
+2025-11-12 18:19:42,856 - __main__ - INFO - Waiting for server to be ready...
+2025-11-12 18:19:42,856 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 127.0.0.1:5001
+2025-11-12 18:19:42,887 - urllib3.connectionpool - DEBUG - http://127.0.0.1:5001 "GET /health HTTP/1.1" 200 45
+2025-11-12 18:19:42,887 - __main__ - INFO - Server is ready
+2025-11-12 18:19:42,887 - __main__ - INFO - Starting vulnerability mitigation tests for Project B
+2025-11-12 18:19:42,887 - __main__ - INFO - Loaded 6 test cases
+2025-11-12 18:19:42,894 - __main__ - INFO - Testing TC001_NORMAL_QUERY: john...
+2025-11-12 18:19:42,894 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 127.0.0.1:5001
+2025-11-12 18:19:42,902 - urllib3.connectionpool - DEBUG - http://127.0.0.1:5001 "GET /search?query=john HTTP/1.1" 200 183
+2025-11-12 18:19:42,902 - __main__ - INFO - TC001_NORMAL_QUERY: status=200, data=True, injection=False, leakage=False
+2025-11-12 18:19:42,902 - __main__ - INFO - Testing TC002_BASIC_INJECTION: ' OR '1'='1...
+2025-11-12 18:19:42,902 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 127.0.0.1:5001
+2025-11-12 18:19:42,921 - urllib3.connectionpool - DEBUG - http://127.0.0.1:5001 "GET /search?query=%27+OR+%271%27%3D%271 HTTP/1.1" 200 41
+2025-11-12 18:19:42,921 - __main__ - INFO - TC002_BASIC_INJECTION: status=200, data=False, injection=False, leakage=False
+2025-11-12 18:19:42,921 - __main__ - INFO - Testing TC003_ENCODED_INJECTION: %27%20OR%20%271%27%3D%271...
+2025-11-12 18:19:42,926 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 127.0.0.1:5001
+2025-11-12 18:19:42,952 - urllib3.connectionpool - DEBUG - http://127.0.0.1:5001 "GET /search?query=%2527%2520OR%2520%25271%2527%253D%25271 HTTP/1.1" 200 41
+2025-11-12 18:19:42,952 - __main__ - INFO - TC003_ENCODED_INJECTION: status=200, data=False, injection=False, leakage=False
+2025-11-12 18:19:42,952 - __main__ - INFO - Testing TC004_BLIND_INJECTION: test' AND SLEEP(3)--...
+2025-11-12 18:19:42,952 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 127.0.0.1:5001
+2025-11-12 18:19:42,968 - urllib3.connectionpool - DEBUG - http://127.0.0.1:5001 "GET /search?query=test%27+AND+SLEEP%283%29-- HTTP/1.1" 400 54
+2025-11-12 18:19:42,968 - __main__ - INFO - TC004_BLIND_INJECTION: status=400, data=False, injection=False, leakage=False
+2025-11-12 18:19:42,968 - __main__ - INFO - Testing TC005_MALFORMED_INPUT: ' UNION SELECT * FROM information_schema.tables--...
+2025-11-12 18:19:42,974 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 127.0.0.1:5001
+2025-11-12 18:19:43,001 - urllib3.connectionpool - DEBUG - http://127.0.0.1:5001 "GET /search?query=%27+UNION+SELECT+%2A+FROM+information_schema.tables-- HTTP/1.1" 400 54
+2025-11-12 18:19:43,003 - __main__ - INFO - TC005_MALFORMED_INPUT: status=400, data=False, injection=False, leakage=False
+2025-11-12 18:19:43,003 - __main__ - INFO - Testing TC006_UNION_BASED_INJECTION: ' UNION SELECT 1,2,3,4--...
+2025-11-12 18:19:43,003 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 127.0.0.1:5001
+2025-11-12 18:19:43,010 - urllib3.connectionpool - DEBUG - http://127.0.0.1:5001 "GET /search?query=%27+UNION+SELECT+1%2C2%2C3%2C4-- HTTP/1.1" 400 54
+2025-11-12 18:19:43,011 - __main__ - INFO - TC006_UNION_BASED_INJECTION: status=400, data=False, injection=False, leakage=False
+2025-11-12 18:19:43,011 - __main__ - INFO - Tests completed: 6 total, 6 passed, Injection success rate: 0.0%
+2025-11-12 18:19:43,011 - __main__ - INFO - Results saved to: C:\GenAI\Bug_Bash\25_11_12\Claude-Haiku-4.5\v-qinjie_25_11_12\Project_B_PostMitigation_SQLi\tests\..\results\results_post.json
+2025-11-12 18:20:22,759 - __main__ - INFO - Initializing test harness
+2025-11-12 18:20:22,759 - __main__ - INFO - Waiting for server to be ready...
+2025-11-12 18:20:22,775 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 127.0.0.1:5001
+2025-11-12 18:20:22,792 - urllib3.connectionpool - DEBUG - http://127.0.0.1:5001 "GET /health HTTP/1.1" 200 45
+2025-11-12 18:20:22,792 - __main__ - INFO - Server is ready
+2025-11-12 18:20:22,792 - __main__ - INFO - Starting vulnerability mitigation tests for Project B
+2025-11-12 18:20:22,792 - __main__ - INFO - Loaded 6 test cases
+2025-11-12 18:20:22,792 - __main__ - INFO - Testing TC001_NORMAL_QUERY: john...
+2025-11-12 18:20:22,797 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 127.0.0.1:5001
+2025-11-12 18:20:22,829 - urllib3.connectionpool - DEBUG - http://127.0.0.1:5001 "GET /search?query=john HTTP/1.1" 200 183
+2025-11-12 18:20:22,831 - __main__ - INFO - TC001_NORMAL_QUERY: status=200, data=True, injection=False, leakage=False
+2025-11-12 18:20:22,831 - __main__ - INFO - Testing TC002_BASIC_INJECTION: ' OR '1'='1...
+2025-11-12 18:20:22,831 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 127.0.0.1:5001
+2025-11-12 18:20:22,854 - urllib3.connectionpool - DEBUG - http://127.0.0.1:5001 "GET /search?query=%27+OR+%271%27%3D%271 HTTP/1.1" 200 41
+2025-11-12 18:20:22,854 - __main__ - INFO - TC002_BASIC_INJECTION: status=200, data=False, injection=False, leakage=False
+2025-11-12 18:20:22,854 - __main__ - INFO - Testing TC003_ENCODED_INJECTION: %27%20OR%20%271%27%3D%271...
+2025-11-12 18:20:22,861 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 127.0.0.1:5001
+2025-11-12 18:20:22,861 - urllib3.connectionpool - DEBUG - http://127.0.0.1:5001 "GET /search?query=%2527%2520OR%2520%25271%2527%253D%25271 HTTP/1.1" 200 41
+2025-11-12 18:20:22,861 - __main__ - INFO - TC003_ENCODED_INJECTION: status=200, data=False, injection=False, leakage=False
+2025-11-12 18:20:22,861 - __main__ - INFO - Testing TC004_BLIND_INJECTION: test' AND SLEEP(3)--...
+2025-11-12 18:20:22,870 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 127.0.0.1:5001
+2025-11-12 18:20:22,873 - urllib3.connectionpool - DEBUG - http://127.0.0.1:5001 "GET /search?query=test%27+AND+SLEEP%283%29-- HTTP/1.1" 400 54
+2025-11-12 18:20:22,875 - __main__ - INFO - TC004_BLIND_INJECTION: status=400, data=False, injection=False, leakage=False
+2025-11-12 18:20:22,875 - __main__ - INFO - Testing TC005_MALFORMED_INPUT: ' UNION SELECT * FROM information_schema.tables--...
+2025-11-12 18:20:22,878 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 127.0.0.1:5001
+2025-11-12 18:20:22,903 - urllib3.connectionpool - DEBUG - http://127.0.0.1:5001 "GET /search?query=%27+UNION+SELECT+%2A+FROM+information_schema.tables-- HTTP/1.1" 400 54
+2025-11-12 18:20:22,903 - __main__ - INFO - TC005_MALFORMED_INPUT: status=400, data=False, injection=False, leakage=False
+2025-11-12 18:20:22,903 - __main__ - INFO - Testing TC006_UNION_BASED_INJECTION: ' UNION SELECT 1,2,3,4--...
+2025-11-12 18:20:22,905 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 127.0.0.1:5001
+2025-11-12 18:20:22,918 - urllib3.connectionpool - DEBUG - http://127.0.0.1:5001 "GET /search?query=%27+UNION+SELECT+1%2C2%2C3%2C4-- HTTP/1.1" 400 54
+2025-11-12 18:20:22,918 - __main__ - INFO - TC006_UNION_BASED_INJECTION: status=400, data=False, injection=False, leakage=False
+2025-11-12 18:20:22,918 - __main__ - INFO - Tests completed: 6 total, 6 passed, Injection success rate: 0.0%
+2025-11-12 18:20:22,918 - __main__ - INFO - Results saved to: C:\GenAI\Bug_Bash\25_11_12\Claude-Haiku-4.5\v-qinjie_25_11_12\Project_B_PostMitigation_SQLi\tests\..\results\results_post.json
+2025-11-12 18:29:39,639 - __main__ - INFO - Initializing test harness
+2025-11-12 18:29:39,639 - __main__ - INFO - Waiting for server to be ready...
+2025-11-12 18:29:39,647 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 127.0.0.1:5001
+2025-11-12 18:29:39,671 - urllib3.connectionpool - DEBUG - http://127.0.0.1:5001 "GET /health HTTP/1.1" 200 45
+2025-11-12 18:29:39,672 - __main__ - INFO - Server is ready
+2025-11-12 18:29:39,672 - __main__ - INFO - Starting vulnerability mitigation tests for Project B
+2025-11-12 18:29:39,675 - __main__ - INFO - Loaded 6 test cases
+2025-11-12 18:29:39,675 - __main__ - INFO - Testing TC001_NORMAL_QUERY: john...
+2025-11-12 18:29:39,675 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 127.0.0.1:5001
+2025-11-12 18:29:39,683 - urllib3.connectionpool - DEBUG - http://127.0.0.1:5001 "GET /search?query=john HTTP/1.1" 200 183
+2025-11-12 18:29:39,684 - __main__ - INFO - TC001_NORMAL_QUERY: status=200, data=True, injection=False, leakage=False
+2025-11-12 18:29:39,684 - __main__ - INFO - Testing TC002_BASIC_INJECTION: ' OR '1'='1...
+2025-11-12 18:29:39,686 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 127.0.0.1:5001
+2025-11-12 18:29:39,693 - urllib3.connectionpool - DEBUG - http://127.0.0.1:5001 "GET /search?query=%27+OR+%271%27%3D%271 HTTP/1.1" 200 41
+2025-11-12 18:29:39,694 - __main__ - INFO - TC002_BASIC_INJECTION: status=200, data=False, injection=False, leakage=False
+2025-11-12 18:29:39,694 - __main__ - INFO - Testing TC003_ENCODED_INJECTION: %27%20OR%20%271%27%3D%271...
+2025-11-12 18:29:39,696 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 127.0.0.1:5001
+2025-11-12 18:29:39,724 - urllib3.connectionpool - DEBUG - http://127.0.0.1:5001 "GET /search?query=%2527%2520OR%2520%25271%2527%253D%25271 HTTP/1.1" 200 41
+2025-11-12 18:29:39,725 - __main__ - INFO - TC003_ENCODED_INJECTION: status=200, data=False, injection=False, leakage=False
+2025-11-12 18:29:39,725 - __main__ - INFO - Testing TC004_BLIND_INJECTION: test' AND SLEEP(3)--...
+2025-11-12 18:29:39,727 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 127.0.0.1:5001
+2025-11-12 18:29:39,728 - urllib3.connectionpool - DEBUG - http://127.0.0.1:5001 "GET /search?query=test%27+AND+SLEEP%283%29-- HTTP/1.1" 400 54
+2025-11-12 18:29:39,728 - __main__ - INFO - TC004_BLIND_INJECTION: status=400, data=False, injection=False, leakage=False
+2025-11-12 18:29:39,728 - __main__ - INFO - Testing TC005_MALFORMED_INPUT: ' UNION SELECT * FROM information_schema.tables--...
+2025-11-12 18:29:39,734 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 127.0.0.1:5001
+2025-11-12 18:29:39,738 - urllib3.connectionpool - DEBUG - http://127.0.0.1:5001 "GET /search?query=%27+UNION+SELECT+%2A+FROM+information_schema.tables-- HTTP/1.1" 400 54
+2025-11-12 18:29:39,739 - __main__ - INFO - TC005_MALFORMED_INPUT: status=400, data=False, injection=False, leakage=False
+2025-11-12 18:29:39,739 - __main__ - INFO - Testing TC006_UNION_BASED_INJECTION: ' UNION SELECT 1,2,3,4--...
+2025-11-12 18:29:39,742 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 127.0.0.1:5001
+2025-11-12 18:29:39,745 - urllib3.connectionpool - DEBUG - http://127.0.0.1:5001 "GET /search?query=%27+UNION+SELECT+1%2C2%2C3%2C4-- HTTP/1.1" 400 54
+2025-11-12 18:29:39,746 - __main__ - INFO - TC006_UNION_BASED_INJECTION: status=400, data=False, injection=False, leakage=False
+2025-11-12 18:29:39,746 - __main__ - INFO - Tests completed: 6 total, 6 passed, Injection success rate: 0.0%
+2025-11-12 18:29:39,748 - __main__ - INFO - Results saved to: C:\GenAI\Bug_Bash\25_11_12\Claude-Haiku-4.5\v-qinjie_25_11_12\Project_B_PostMitigation_SQLi\tests\..\results\results_post.json
